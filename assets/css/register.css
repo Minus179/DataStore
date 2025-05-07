@@ -1,0 +1,200 @@
+/* Reset: Thiết lập lại các thuộc tính mặc định */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body: Thiết lập cho body của trang */
+body {
+  font-family: "Poppins", sans-serif;
+  background: url("https://blogedenred.com.uy/wp-content/uploads/2019/07/que-son-los-productos-ultraprocesados.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header: Định dạng cho header */
+header {
+  background: rgba(0, 123, 167, 0.85); /* Màu xanh biển */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* Main: Định dạng cho phần chính */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Register Box: Định dạng cho hộp đăng ký */
+.container {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+}
+
+/* Heading: Định dạng tiêu đề trong container */
+.container h2 {
+  margin-bottom: 20px;
+  color: #388e85; /* Màu xanh biển mới */
+  font-weight: 700;
+}
+
+/* Form Inputs: Định dạng các trường nhập liệu (input, textarea, select) */
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* Focus effect: Khi trường nhập liệu được chọn */
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: #388e85; /* Màu xanh biển mới khi focus */
+}
+
+/* Button: Định dạng nút submit */
+form button {
+  background-color: #388e85; /* Màu xanh biển mới */
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  transition: 0.3s ease;
+  width: 100%;
+  cursor: pointer;
+}
+
+/* Hover effect for button: Khi rê chuột qua nút */
+form button:hover {
+  background-color: #004d40; /* Màu xanh biển đậm khi hover */
+}
+
+/* Forgot Password Link: Định dạng cho liên kết quên mật khẩu */
+.forgot-password a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #388e85; /* Màu xanh biển mới cho liên kết */
+  text-decoration: none;
+}
+
+/* Hover effect for forgot password link */
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Register Link: Định dạng cho liên kết đăng ký */
+.register-link a {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #388e85; /* Màu xanh biển mới cho liên kết */
+  text-decoration: none;
+}
+
+/* Hover effect for register link */
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Footer: Định dạng cho footer */
+footer {
+  background: rgba(0, 123, 167, 0.85); /* Màu xanh biển */
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+}
+
+/* Message Box: Định dạng cho thông báo */
+.message {
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+  color: #388e85; /* Màu xanh biển mới cho thông báo */
+}
+
+.message a {
+  color: #388e85; /* Màu xanh biển mới cho liên kết trong thông báo */
+}
+
+.message a:hover {
+  text-decoration: underline;
+}
+
+/* Input Styles for Error/Success: Định dạng khi có lỗi hoặc thành công */
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #388e85; /* Màu xanh biển mới khi focus */
+}
+
+/* Styling for Textarea: Định dạng cho textarea */
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+/* Style for Login link: Định dạng cho liên kết đăng nhập */
+.login-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.login-link a {
+  color: #388e85; /* Màu xanh biển mới cho liên kết */
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Form for All Pages: Định dạng cho form trên tất cả các trang */
+form {
+  margin-top: 20px;
+}
+
+/* Mobile View Adjustment: Điều chỉnh cho màn hình di động */
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 20px;
+    width: 100%;
+  }
+
+  header {
+    font-size: 22px;
+  }
+
+  form input,
+  form textarea,
+  form select {
+    padding: 10px;
+  }
+
+  form button {
+    padding: 12px 18px;
+  }
+}

@@ -1,0 +1,84 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #f0f4f8;
+  color: #333;
+}
+
+.header {
+  background: #388e85; /* đổi sang xanh lá trầm */
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #388e85; /* đổi sang xanh lá trầm */
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-block p {
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.info-block p strong {
+  font-weight: 600;
+  width: 35%;
+}
+
+.info-block p span {
+  width: 65%;
+  word-wrap: break-word;
+}
+
+.form-buttons {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.update-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #388e85; /* đổi sang xanh lá trầm */
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  text-align: center;
+}
+
+.update-btn:hover {
+  background: #2c6e5b; /* xanh lá đậm khi hover */
+}
+
+.update-btn i {
+  margin-right: 8px;
+}

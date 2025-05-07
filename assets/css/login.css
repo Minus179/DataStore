@@ -1,0 +1,128 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: url("https://blogedenred.com.uy/wp-content/uploads/2019/07/que-son-los-productos-ultraprocesados.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Header */
+header {
+  background: rgba(56, 142, 133, 0.9); /* xanh ngọc */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* Main */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Hộp đăng nhập */
+.container.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #388e85;
+  font-weight: 700;
+}
+
+/* Form */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  border-color: #388e85;
+  outline: none;
+}
+
+/* Nút đăng nhập */
+button[type="submit"] {
+  background-color: #388e85;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #2e726c;
+}
+
+/* Thông báo lỗi */
+.message.error {
+  color: red;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* Liên kết */
+.forgot-password a,
+.register-link a {
+  color: #388e85;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.forgot-password a:hover,
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.register-link {
+  margin-top: 20px;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Footer */
+footer {
+  background: rgba(56, 142, 133, 0.9);
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+  width: 100%;
+}
