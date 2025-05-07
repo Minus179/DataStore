@@ -13,10 +13,17 @@ if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
 
-// Gán giá trị mặc định cho username
-if (!isset($_SESSION['username'])) {
-    $_SESSION['username'] = 'Khách hàng'; // Gán tên mặc định
-}
+// Lấy thông tin người dùng (bao gồm ảnh đại diện và tên)
+$userQuery = "SELECT name, avatar FROM users WHERE id = ?";
+$stmtUser = $conn->prepare($userQuery);
+$stmtUser->bind_param("i", $_SESSION['user_id']);
+$stmtUser->execute();
+$userResult = $stmtUser->get_result();
+$userData = $userResult->fetch_assoc();
+
+// Gán giá trị mặc định cho name và avatar
+$username = isset($userData['name']) ? $userData['name'] : 'Khách hàng';  // Dùng 'name' thay vì 'username'
+$avatar = isset($userData['avatar']) ? $userData['avatar'] : 'default-avatar.jpg';  // Nếu không có ảnh đại diện, dùng ảnh mặc định
 
 // Lấy số lượng sản phẩm trong giỏ hàng
 $cartCount = 0;
@@ -44,7 +51,8 @@ if ($cartData = $cartResult->fetch_assoc()) {
 <header>
     <div class="header-container">
         <div class="user-info">
-            <p>Xin chào, <span class="username"><?= htmlspecialchars($_SESSION['username']) ?></span>!</p>
+            <img src="/DataStore/assets/images/picture/<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="avatar">
+            <p>Xin chào, <span class="username"><?= htmlspecialchars($username) ?></span>!</p>
         </div>
         <div class="header-actions">
             <a href="profile.php" class="action-btn">Tài khoản</a>
@@ -54,15 +62,31 @@ if ($cartData = $cartResult->fetch_assoc()) {
 </header>
 
 <main>
-    
-<form action="timkiem.php" method="GET" class="search-container">
+  
+<!-- Tìm kiếm -->
+<form action="timkiem.php" method="GET" class="search-container" id="searchForm">
   <div class="search-bar">
-    <input type="text" name="query" class="search-input" placeholder="Nhập món ăn cần tìm...">
-    <button type="submit" class="search-button">
+    <input type="text" name="query" class="search-input" placeholder="Nhập món ăn cần tìm..." onkeypress="submitOnEnter(event)" onclick="submitForm()">
+    <button type="submit" class="search-button" onclick="submitForm()">
       <i class="fas fa-search"></i>
     </button>
   </div>
 </form>
+
+<script>
+  // Hàm submit form khi nhấn Enter
+  function submitOnEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();  // Ngăn chặn hành động mặc định của phím Enter
+      submitForm();  // Gửi form
+    }
+  }
+
+  // Hàm gửi form khi nhấn chuột vào ô nhập liệu hoặc nút tìm kiếm
+  function submitForm() {
+    document.getElementById("searchForm").submit();  // Gửi form
+  }
+</script>
 
 <!-- Banner khuyến mãi -->
 <div class="banner-container">
@@ -80,8 +104,6 @@ if ($cartData = $cartResult->fetch_assoc()) {
 </div>
 
 <!-- Tính năng -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <div class="features-scroll">
   <div class="features-list">
     <a href="menu.php" class="feature">

@@ -10,42 +10,31 @@ $suggestions = [];
 if (isset($_GET['search_term'])) {
     $searchTerm = mysqli_real_escape_string($conn, $_GET['search_term']);
 
-    // Truy vấn tìm kiếm món ăn
-    $query = "SELECT * FROM menu WHERE name LIKE '%$searchTerm%' OR description LIKE '%$searchTerm%'";
+    // Truy vấn tìm kiếm món ăn từ bảng menu_items
+    $query = "SELECT * FROM menu_items WHERE name LIKE '%$searchTerm%' OR description LIKE '%$searchTerm%'";
     $result = mysqli_query($conn, $query);
-    
-    // Kiểm tra lỗi SQL
+
     if (!$result) {
         die("Lỗi truy vấn: " . mysqli_error($conn));
     }
 
-    // Lưu kết quả tìm kiếm
-    if (mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $searchResults[] = $row;
-        }
-    } else {
-        $searchResults = []; // Không có kết quả, trả về mảng rỗng
+    while ($row = mysqli_fetch_assoc($result)) {
+        $searchResults[] = $row;
     }
 }
 
 // Truy vấn món ăn phổ biến gợi ý
-$suggestionQuery = "SELECT * FROM menu WHERE popularity > 50 LIMIT 10";
+$suggestionQuery = "SELECT * FROM menu_items WHERE popularity > 50 ORDER BY popularity DESC LIMIT 10";
 $suggestionResult = mysqli_query($conn, $suggestionQuery);
 
-// Kiểm tra lỗi SQL
 if (!$suggestionResult) {
     die("Lỗi truy vấn: " . mysqli_error($conn));
 }
 
-// Lưu gợi ý món ăn
-if (mysqli_num_rows($suggestionResult) > 0) {
-    while ($row = mysqli_fetch_assoc($suggestionResult)) {
-        $suggestions[] = $row;
-    }
+while ($row = mysqli_fetch_assoc($suggestionResult)) {
+    $suggestions[] = $row;
 }
 
-// Các nhóm món ăn gợi ý
 $categories = [
     'Phở' => '🍲',
     'Bún' => '🍜',
@@ -64,107 +53,8 @@ $categories = [
 <head>
     <meta charset="UTF-8">
     <title>Tìm kiếm món ăn - DATASTORE FOOD</title>
-    <style>
-        body {
-            font-family: "Segoe UI", sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: #388e85;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 24px;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        .search-section {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .search-section input {
-            padding: 12px 18px;
-            font-size: 16px;
-            border-radius: 30px;
-            border: 1px solid #ccc;
-            width: 80%;
-            max-width: 600px;
-        }
-
-        .search-section button {
-            padding: 12px 20px;
-            background-color: #388e85;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-
-        .categories {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .category-btn {
-            background-color: #f0f0f0;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            margin: 5px;
-            font-size: 16px;
-            display: inline-block;
-        }
-
-        .category-btn:hover {
-            background-color: #388e85;
-            color: white;
-        }
-
-        .search-results, .suggestions {
-            margin-top: 30px;
-        }
-
-        .search-results ul, .suggestions ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .search-results li, .suggestions li {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .search-results img, .suggestions img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        footer {
-            background-color: #388e85;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            margin-top: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="../../assets/css/customer/timkiem.css?v=<?=time()?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <header>
@@ -172,6 +62,12 @@ $categories = [
     </header>
 
     <main>
+    <div class="back-to-home">
+  <a href="home.php" class="back-btn">
+    <i class="fas fa-arrow-left"></i> 
+  </a>
+    </div>
+        <!-- Form tìm kiếm -->
         <section class="search-section">
             <form action="timkiem.php" method="GET">
                 <input type="text" name="search_term" placeholder="Tìm món ăn hoặc món nước..." value="<?php echo isset($_GET['search_term']) ? htmlspecialchars($_GET['search_term']) : ''; ?>" required>
@@ -179,6 +75,7 @@ $categories = [
             </form>
         </section>
 
+        <!-- Danh mục gợi ý -->
         <section class="categories">
             <form class="category-form">
                 <?php foreach ($categories as $category => $icon): ?>
@@ -189,38 +86,63 @@ $categories = [
             </form>
         </section>
 
-        <section class="search-results">
-            <?php if (!empty($searchResults)): ?>
-                <h2>Kết quả tìm kiếm:</h2>
-                <ul>
-                    <?php foreach ($searchResults as $item): ?>
-                        <li>
-                            <a href="menu.php?id=<?php echo $item['id']; ?>">
-                                <img src="../../assets/images/<?php echo $item['image']; ?>" alt="<?php echo $item['name']; ?>">
-                                <span><?php echo $item['name']; ?></span>
-                            </a>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
-            <?php elseif (isset($_GET['search_term'])): ?>
-                <p>Không tìm thấy món ăn nào phù hợp với từ khóa tìm kiếm.</p>
-            <?php endif; ?>
-        </section>
+        <!-- Kết quả tìm kiếm -->
+<!-- Kết quả tìm kiếm -->
+<section class="search-results">
+    <?php if (!empty($searchResults)): ?>
+        <h2>Kết quả tìm kiếm:</h2>
+        <div class="collection-list">
+            <?php foreach ($searchResults as $item): ?>
+                <div class="collection-card">
+                    <?php
+                        $folder = ($item['type'] == 'food') ? "food" : "drink";
+                        $fileName = $item['image_path'] ?? '';
+                        $imagePath = "../../assets/images/{$folder}/{$fileName}";
 
+                        if (!file_exists($imagePath) || empty($fileName)) {
+                            $imagePath = "../../assets/images/default.jpg";
+                        }
+                    ?>
+                    <img src="<?= $imagePath ?>" alt="<?= htmlspecialchars($item['name']) ?>" width="100">
+                    <p><?= htmlspecialchars($item['name']) ?></p>
+                    <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                    <form action="add_to_cart.php" method="post">
+                        <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                        <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php elseif (isset($_GET['search_term'])): ?>
+        <p>Không tìm thấy món ăn nào phù hợp. Vui lòng thử lại với từ khóa khác!</p>
+    <?php endif; ?>
+</section>
+
+
+        <!-- Món phổ biến -->
         <section class="suggestions">
             <h2>Món ăn phổ biến:</h2>
             <ul>
                 <?php foreach ($suggestions as $suggestion): ?>
+                    <?php
+                        $folder = ($suggestion['type'] == 'food') ? "food" : "drink";
+                        $fileName = $suggestion['image_path'] ?? '';
+                        $imagePath = "../../assets/images/{$folder}/{$fileName}";
+
+                        if (!file_exists($imagePath) || empty($fileName)) {
+                            $imagePath = "../../assets/images/default.jpg";
+                        }
+                    ?>
                     <li>
                         <a href="menu.php?id=<?php echo $suggestion['id']; ?>">
-                            <img src="../../assets/images/<?php echo $suggestion['image']; ?>" alt="<?php echo $suggestion['name']; ?>">
+                            <img src="<?php echo $imagePath; ?>" alt="<?php echo $suggestion['name']; ?>" width="100">
                             <span><?php echo $suggestion['name']; ?></span>
+                            <span>Lượt mua: <?php echo $suggestion['popularity']; ?></span>
                         </a>
                     </li>
                 <?php endforeach; ?>
             </ul>
         </section>
-    </main>
 
     <footer>
         <p>IT_STARTUP TEAM - Khởi nghiệp cùng bạn!</p>

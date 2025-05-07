@@ -1,0 +1,276 @@
+/* Cấu trúc cơ bản của trang */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #388e85; /* Màu xanh mới */
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+main {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 60px; /* Đảm bảo không bị che bởi footer */
+}
+
+/* Nút quay lại trang chủ */
+.back-to-home {
+  position: absolute;
+  left: 20px; /* Canh chỉnh về phía bên trái */
+  top: 100px; /* Khoảng cách từ trên */
+}
+
+.back-btn {
+  width: 50px; /* Đặt chiều rộng cho nút */
+  height: 50px; /* Đặt chiều cao cho nút */
+  background-color: #388e85; /* Màu nền mới là #388e85 */
+  color: white; /* Màu chữ và biểu tượng trắng */
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Căn giữa biểu tượng */
+  border-radius: 50%; /* Biến nút thành hình tròn */
+  font-size: 24px; /* Kích thước biểu tượng mũi tên */
+  transition: background-color 0.3s ease;
+}
+
+.back-btn i {
+  color: white; /* Đảm bảo mũi tên màu trắng */
+}
+
+.back-btn:hover {
+  background-color: #2c6e63; /* Màu khi hover (màu xanh đậm hơn) */
+}
+
+/* Tải Font Awesome nếu chưa có */
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+
+/* Form tìm kiếm */
+.search-section form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.search-section input[type="text"] {
+  padding: 12px;
+  font-size: 16px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: border-color 0.3s ease;
+}
+
+.search-section input[type="text"]:focus {
+  border-color: #388e85;
+  outline: none;
+}
+
+.search-section button {
+  padding: 12px 25px;
+  background-color: #388e85;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.search-section button:hover {
+  background-color: #2c6e63;
+}
+
+/* Danh mục gợi ý */
+.categories {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.category-form button {
+  background-color: #fff;
+  border: 1px solid #388e85;
+  padding: 12px 30px;
+  margin: 5px 10px;
+  font-size: 16px;
+  color: #388e85;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.category-form button:hover {
+  background-color: #388e85;
+  color: white;
+}
+
+/* Kết quả tìm kiếm */
+.search-results {
+  margin-bottom: 30px;
+}
+
+.search-results h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.collection-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Điều chỉnh khoảng cách */
+  justify-content: flex-start; /* Các món ăn xếp liền kề */
+}
+
+.collection-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 220px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.collection-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.collection-card p {
+  margin: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.collection-card .btn-add-cart {
+  padding: 12px 25px;
+  background-color: #388e85;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.collection-card .btn-add-cart:hover {
+  background-color: #2c6e63;
+}
+
+/* Món ăn phổ biến */
+.suggestions {
+  margin-top: 40px;
+}
+
+.suggestions h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.suggestions ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start; /* Các món ăn xếp liền kề */
+}
+
+.suggestions ul li {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 180px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.suggestions ul li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions ul li img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.suggestions ul li span {
+  display: block;
+  margin: 5px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.suggestions ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Nút giỏ hàng */
+.cart-btn-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cart-btn {
+  padding: 12px 25px;
+  background-color: #388e85;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.cart-btn:hover {
+  background-color: #2c6e63;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  font-size: 14px;
+  width: 100%; /* Footer chiếm toàn bộ chiều rộng màn hình */
+  position: fixed; /* Cố định footer ở dưới cùng */
+  bottom: 0; /* Đảm bảo footer nằm dưới cùng */
+  left: 0; /* Đảm bảo footer phủ hết chiều ngang */
+  z-index: 1000; /* Đảm bảo footer luôn hiển thị phía trên các phần tử khác */
+}
+
+footer p {
+  margin: 0;
+  font-size: 16px;
+}
