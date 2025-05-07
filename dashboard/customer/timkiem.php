@@ -65,7 +65,6 @@ $categories = [
     <meta charset="UTF-8">
     <title>Tìm kiếm món ăn - DATASTORE FOOD</title>
     <style>
-        /* Các kiểu CSS để thiết kế giao diện như trong mã của bạn */
         body {
             font-family: "Segoe UI", sans-serif;
             background-color: #f9f9f9;
@@ -74,7 +73,97 @@ $categories = [
             flex-direction: column;
             min-height: 100vh;
         }
-        /* Các kiểu CSS khác */
+
+        header {
+            background-color: #388e85;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-section input {
+            padding: 12px 18px;
+            font-size: 16px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .search-section button {
+            padding: 12px 20px;
+            background-color: #388e85;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .categories {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .category-btn {
+            background-color: #f0f0f0;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .category-btn:hover {
+            background-color: #388e85;
+            color: white;
+        }
+
+        .search-results, .suggestions {
+            margin-top: 30px;
+        }
+
+        .search-results ul, .suggestions ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .search-results li, .suggestions li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .search-results img, .suggestions img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        footer {
+            background-color: #388e85;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+        }
     </style>
 </head>
 <body>

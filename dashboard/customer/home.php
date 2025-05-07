@@ -55,24 +55,14 @@ if ($cartData = $cartResult->fetch_assoc()) {
 
 <main>
     
-<!-- Thanh tìm kiếm -->
-<div class="search-bar">
-    <form action="timkiem.php" method="get">
-        <input 
-            type="text" 
-            name="query" 
-            placeholder="Tìm món ăn yêu thích..." 
-            class="search-input" 
-            required
-            id="search-input"
-            onclick="window.location='timkiem.php';"
-        >
-        <button type="submit" class="search-button">
-            <i class="fas fa-search"></i>
-        </button>
-    </form>
-</div>
-
+<form action="timkiem.php" method="GET" class="search-container">
+  <div class="search-bar">
+    <input type="text" name="query" class="search-input" placeholder="Nhập món ăn cần tìm...">
+    <button type="submit" class="search-button">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</form>
 
 <!-- Banner khuyến mãi -->
 <div class="banner-container">
@@ -89,7 +79,7 @@ if ($cartData = $cartResult->fetch_assoc()) {
     </div>
 </div>
 
-    <!-- Tính năng -->
+<!-- Tính năng -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <div class="features-scroll">
@@ -113,68 +103,71 @@ if ($cartData = $cartResult->fetch_assoc()) {
   </div>
 </div>
 
+<!-- Bộ sưu tập món ăn -->
+<section class="collections">
+    <h2>Món ăn hôm nay</h2>
+    <div class="collection-list">
+        <?php
+        $stmt_food = $conn->prepare("SELECT * FROM menu_items WHERE type = 'food' LIMIT 5");
+        $stmt_food->execute();
+        $result_food = $stmt_food->get_result();
 
-    <!-- Bộ sưu tập món ăn -->
-    <section class="collections">
-        <h2>Món ăn hôm nay</h2>
-        <div class="collection-list">
-            <?php
-            $stmt_food = $conn->prepare("SELECT * FROM menu_items WHERE category = 'food' LIMIT 5");
-            $stmt_food->execute();
-            $result_food = $stmt_food->get_result();
-
-            if ($result_food->num_rows === 0) {
-                echo "<p>Hiện tại không có món ăn nào.</p>";
-            } else {
-                while ($item = $result_food->fetch_assoc()) {
-                    ?>
-                    <div class="collection-card">
-                    <img src="/DataStore/assets/images/<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
-                        <p><?= htmlspecialchars($item['name']) ?></p>
-                        <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                        <form action="add_to_cart.php" method="post">
-                            <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                            <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                        </form>
-                    </div>
-                    <?php
-                }
+        if ($result_food->num_rows === 0) {
+            echo "<p>Hiện tại không có món ăn nào.</p>";
+        } else {
+            while ($item = $result_food->fetch_assoc()) {
+                ?>
+                <div class="collection-card">
+                <img src="/DataStore/assets/images/food/<?= htmlspecialchars($item['image_path']) ?>" 
+                alt="<?= htmlspecialchars($item['name']) ?>" 
+                width="100">
+                    <p><?= htmlspecialchars($item['name']) ?></p>
+                    <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                    <form action="add_to_cart.php" method="post">
+                        <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                        <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
+                    </form>
+                </div>
+                <?php
             }
-            ?>
-        </div>
-    </section>
+        }
+        ?>
+    </div>
+</section>
 
-    <!-- Bộ sưu tập món nước -->
-    <section class="collections">
-        <h2>Món nước hôm nay</h2>
-        <div class="collection-list">
-            <?php
-            $stmt_drink = $conn->prepare("SELECT * FROM menu_items WHERE category = 'drink' LIMIT 5");
-            $stmt_drink->execute();
-            $result_drink = $stmt_drink->get_result();
+<!-- Bộ sưu tập món nước -->
+<section class="collections">
+    <h2>Món nước hôm nay</h2>
+    <div class="collection-list">
+        <?php
+        $stmt_drink = $conn->prepare("SELECT * FROM menu_items WHERE type = 'drink' LIMIT 5");
+        $stmt_drink->execute();
+        $result_drink = $stmt_drink->get_result();
 
-            if ($result_drink->num_rows === 0) {
-                echo "<p>Hiện tại không có món nước nào.</p>";
-            } else {
-                while ($item = $result_drink->fetch_assoc()) {
-                    ?>
-                    <div class="collection-card">
-                    <img src="/DataStore/assets/images/<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>">
-                        <p><?= htmlspecialchars($item['name']) ?></p>
-                        <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                        <form action="add_to_cart.php" method="post">
-                            <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                            <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                        </form>
-                    </div>
-                    <?php
-                }
+        if ($result_drink->num_rows === 0) {
+            echo "<p>Hiện tại không có món nước nào.</p>";
+        } else {
+            while ($item = $result_drink->fetch_assoc()) {
+                ?>
+                <div class="collection-card">
+                <img src="/DataStore/assets/images/drink/<?= htmlspecialchars($item['image_path']) ?>" 
+                alt="<?= htmlspecialchars($item['name']) ?>" 
+                width="100">
+                    <p><?= htmlspecialchars($item['name']) ?></p>
+                    <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                    <form action="add_to_cart.php" method="post">
+                        <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                        <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
+                    </form>
+                </div>
+                <?php
             }
-            ?>
-        </div>
-    </section>
+        }
+        ?>
+    </div>
+</section>
 
-    <footer class="footer">
+<footer class="footer">
   <div class="footer-container">
     <!-- Cột: Món ăn -->
     <div class="footer-column">
@@ -232,18 +225,18 @@ if ($cartData = $cartResult->fetch_assoc()) {
   </div>
 </footer>
 
-    <!-- Điều hướng dưới cùng -->
-    <nav class="bottom-nav">
-        <a href="home.php"><i class="fas fa-home"></i><span> Trang chủ</span></a>
-        <a href="cart.php">
-            <i class="fas fa-shopping-cart"></i>
-            <span> Giỏ hàng</span>
-            <?php if ($cartCount > 0): ?>
-                <span class="cart-count"><?= $cartCount ?></span>
-            <?php endif; ?>
-        </a>
-        <a href="profile.php"><i class="fas fa-user"></i><span> Tài khoản</span></a>
-    </nav>
+<!-- Điều hướng dưới cùng -->
+<nav class="bottom-nav">
+    <a href="home.php"><i class="fas fa-home"></i><span> Trang chủ</span></a>
+    <a href="cart.php">
+        <i class="fas fa-shopping-cart"></i>
+        <span> Giỏ hàng</span>
+        <?php if ($cartCount > 0): ?>
+            <span class="cart-count"><?= $cartCount ?></span>
+        <?php endif; ?>
+    </a>
+    <a href="profile.php"><i class="fas fa-user"></i><span> Tài khoản</span></a>
+</nav>
 </main>
 
 <script src="../../assets/js/customer.js"></script>
