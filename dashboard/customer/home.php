@@ -145,10 +145,11 @@ if ($cartData = $cartResult->fetch_assoc()) {
                 width="100">
                     <p><?= htmlspecialchars($item['name']) ?></p>
                     <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                    <form action="add_to_cart.php" method="post">
-                        <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                        <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                    </form>
+                    <form action="add_to_cart.php" method="post" class="action-buttons">
+                    <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                    <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">Xem chi tiết</a>
+                    <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
+                </form>
                 </div>
                 <?php
             }
@@ -177,10 +178,11 @@ if ($cartData = $cartResult->fetch_assoc()) {
                 width="100">
                     <p><?= htmlspecialchars($item['name']) ?></p>
                     <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                    <form action="add_to_cart.php" method="post">
-                        <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                        <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                    </form>
+                    <form action="add_to_cart.php" method="post" class="action-buttons">
+                    <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                    <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">Xem chi tiết</a>
+                    <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
+                </form>
                 </div>
                 <?php
             }
@@ -242,8 +244,8 @@ if ($cartData = $cartResult->fetch_assoc()) {
 
   <!-- Thông tin công ty -->
   <div class="footer-bottom">
-    <p>© 2025 DATASTORE_FOOD - Hệ thống đặt đồ ăn và nước uống tiện lợi</p>
-    <p>Địa chỉ: Số 244 Cống Quỳnh, P. Phạm Ngũ Lão, Q.1, TP.HCM</p>
+    <p>DATASTORE_FOOD - Hệ thống đặt đồ ăn và nước uống tiện lợi</p>
+    <p>Địa chỉ: Số 490 Hoang Van Thu, P. Tran Phu, TP.Quy Nhon</p>
   </div>
 </footer>
 
@@ -259,12 +261,10 @@ if ($cartData = $cartResult->fetch_assoc()) {
     </a>
     <a href="profile.php"><i class="fas fa-user"></i><span> Tài khoản</span></a>
 </nav>
+
 </main>
 
 <script src="../../assets/js/customer.js"></script>
 </body>
 </html>
 
-<?php
-$conn->close();
-?>

@@ -256,18 +256,40 @@ header {
   font-size: 14px;
 }
 
-.btn-add-cart {
-  background-color: #004d40;
-  border: none;
-  color: white;
-  padding: 8px 16px;
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
   margin-top: 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
 }
 
-.btn-add-cart:hover {
+.action-buttons .btn-detail,
+.action-buttons .btn-add-cart {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-buttons .btn-detail {
+  background-color: #ff9f00;
+  color: white;
+}
+
+.action-buttons .btn-detail:hover {
+  background-color: #e68900;
+  transform: translateY(-3px);
+}
+
+.action-buttons .btn-add-cart {
+  background-color: #004d40;
+  color: white;
+}
+
+.action-buttons .btn-add-cart:hover {
   background-color: #388e85;
 }
 
