@@ -1,0 +1,380 @@
+/* ============================================
+   FILE: assets/css/store_owner/home.css
+   ============================================ */
+
+/* ========== RESET CƠ BẢN ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f9f9f9;
+  color: #388e85;
+  display: flex;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+}
+
+/* ========== SIDEBAR ========== */
+.sidebar {
+  width: 220px;
+  background-color: #388e85;
+  color: #ecf0f1;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.sidebar h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem; /* tăng tí để tách rõ */
+  user-select: none;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0; /* reset margin mặc định */
+}
+
+.sidebar ul li {
+  margin-bottom: 1.25rem; /* đều hơn */
+}
+
+.sidebar ul li a {
+  color: #ecf0f1;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.6rem 0.5rem; /* tăng padding cho dễ bấm */
+  display: block;
+  border-radius: 6px; /* tròn hơn */
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a:focus {
+  background-color: #2a706c;
+  outline: none;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  margin-left: 220px;
+  padding: 2rem 2.5rem; /* đều 2.5 bên, gọn */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #e6f2f1;
+  color: #388e85;
+  overflow-y: auto;
+}
+
+/* ========== HEADER ========== */
+.top-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem; /* tăng gap cho thoáng */
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  font-size: 1.6rem; /* tăng cỡ chút */
+  background-color: #388e85;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.back-btn:hover,
+.back-btn:focus {
+  background-color: #2a706c;
+  outline: none;
+}
+
+.header-text {
+  font-weight: 700;
+  font-size: 1.9rem; /* tăng nhẹ để nổi */
+  user-select: none;
+  letter-spacing: 1.2px;
+  flex-grow: 1; /* để header text chiếm hết chỗ còn lại */
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+/* ========== SCROLLABLE TABS ========== */
+.scrollable-tabs {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 6px; /* tạo khoảng cho scrollbar */
+}
+
+.scrollable-tabs .tab {
+  padding: 0.65rem 1.3rem;
+  font-size: 1.15rem;
+  border: none;
+  background-color: #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.scrollable-tabs .tab.active {
+  background-color: #388e85;
+  color: white;
+}
+
+.scrollable-tabs .tab:hover:not(.active) {
+  background-color: #aaa;
+  color: white;
+}
+
+/* ========== CATEGORY TABS ========== */
+.category-tabs {
+  margin: 1rem 0 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.category-tabs .tab {
+  background-color: #c7e3e0;
+  border: none;
+  padding: 0.6rem 1.3rem;
+  font-weight: 600;
+  border-radius: 30px;
+  color: #388e85;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(56, 142, 133, 0.2);
+}
+
+.category-tabs .tab.active,
+.category-tabs .tab:hover,
+.category-tabs .tab:focus {
+  background-color: #388e85;
+  color: #fff;
+  outline: none;
+  box-shadow: 0 5px 15px rgba(56, 142, 133, 0.6);
+}
+
+/* ========== MENU SECTION ========== */
+.menu-section {
+  flex-grow: 1;
+}
+
+.menu-section h3 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #388e85;
+  user-select: none;
+}
+
+/* ========== MENU GRID ========== */
+.menu-list.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ========== MENU CARD ========== */
+.menu-card {
+  background-color: #d5ebe8;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(56, 142, 133, 0.3);
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #2a706c;
+  user-select: none;
+  will-change: transform;
+}
+
+.menu-card:hover,
+.menu-card:focus {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(56, 142, 133, 0.6);
+  outline: none;
+}
+
+.menu-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 1px 4px rgba(56, 142, 133, 0.3);
+}
+
+.menu-card h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+  text-align: center;
+  color: #388e85;
+}
+
+.menu-card p {
+  font-weight: 700;
+  color: #388e85;
+  margin-bottom: 0.8rem;
+}
+
+/* Nút sửa & xóa */
+.menu-card-actions {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.menu-card-actions form {
+  margin: 0;
+}
+
+.menu-card-actions button {
+  background-color: #388e85;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.menu-card-actions button:hover,
+.menu-card-actions button:focus {
+  background-color: #2a706c;
+  outline: none;
+}
+
+.menu-card-actions button[title="Xóa món"] {
+  background-color: #d9534f;
+}
+
+.menu-card-actions button[title="Xóa món"]:hover,
+.menu-card-actions button[title="Xóa món"]:focus {
+  background-color: #b52b27;
+}
+
+/* ========== FORM STYLE ========== */
+form {
+  max-width: 900px;
+  margin: 0 auto 40px;
+  padding: 25px 30px;
+  background: #e6f2f2;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(56, 142, 133, 0.25);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 30px;
+  row-gap: 20px;
+  color: #2b4d4a;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #27695f;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select,
+form textarea,
+form input[type="file"] {
+  margin-top: 6px;
+  padding: 10px 14px;
+  width: 100%;
+  border: 2px solid #388e85;
+  border-radius: 10px;
+  background-color: #f0fbfa;
+  font-size: 1rem;
+  color: #1f3937;
+  resize: vertical;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  outline: none;
+}
+
+form textarea {
+  min-height: 80px;
+}
+
+form input[type="file"] {
+  padding: 6px 8px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus,
+form input[type="file"]:focus {
+  border-color: #2c6c65;
+  box-shadow: 0 0 8px #388e85aa;
+}
+
+form button[type="submit"] {
+  grid-column: 1 / -1;
+  background-color: #388e85;
+  color: white;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: 16px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin-top: 12px;
+  box-shadow: 0 5px 15px rgba(56, 142, 133, 0.6);
+  transition: background-color 0.35s ease;
+}
+
+form button[type="submit"]:hover,
+form button[type="submit"]:focus {
+  background-color: #2a706c;
+  outline: none;
+}

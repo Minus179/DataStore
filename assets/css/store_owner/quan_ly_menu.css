@@ -1,0 +1,277 @@
+/* --- Biến CSS để dễ bảo trì theme --- */
+:root {
+  --primary-green: #28a745;
+  --primary-green-dark: #1f7a2e;
+  --primary-green-light: #e0f2e9;
+  --error-bg: #ffe6e6;
+  --error-border: #ff4d4d;
+  --error-color: #cc0000;
+  --font-primary: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --transition-default: 0.3s ease;
+}
+
+/* --- Container chính --- */
+#content-area {
+  max-width: 1080px;
+  margin: 20px auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+  color: #1b3b1a;
+}
+
+/* --- Header ngang cố định --- */
+.top-header {
+  background-color: #222;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 25px;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 2px solid #444;
+  height: 60px;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #555 transparent;
+}
+
+.top-header::-webkit-scrollbar {
+  height: 6px;
+}
+
+.top-header::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 3px;
+}
+
+.top-header button {
+  background: none;
+  border: none;
+  color: #ddd;
+  font-weight: 600;
+  margin-right: 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 16px;
+  line-height: 1.2;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.top-header button:hover,
+.top-header button.active {
+  background-color: #555;
+  color: #fff;
+}
+
+/* --- Nội dung chính --- */
+.main-content {
+  padding: 20px;
+  max-width: 1080px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+  color: #1b3b1a;
+}
+
+/* --- Lưới món ăn --- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.menu-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+
+.menu-card:hover,
+.menu-card:focus-within {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.15);
+}
+
+.menu-card:focus-visible {
+  outline: 3px solid var(--primary-green-dark);
+  outline-offset: 4px;
+}
+
+.menu-card img {
+  max-width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.menu-card h4 {
+  margin: 12px 10px 4px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1b3b1a;
+}
+
+.menu-card p {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--primary-green);
+  margin-bottom: 12px;
+}
+
+/* --- Khu vực thông tin --- */
+.info-section {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 600px;
+  font-size: 16px;
+  color: #333;
+  box-sizing: border-box;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.05);
+  margin-top: 30px;
+}
+
+/* --- Form thêm món --- */
+.add-item-form {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 15px 25px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgb(0 0 0 / 0.1);
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+}
+
+.add-item-form .form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.add-item-form .form-col {
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-item-form label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.add-item-form input[type="text"],
+.add-item-form input[type="number"],
+.add-item-form select,
+.add-item-form textarea {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.add-item-form input[type="text"]:focus,
+.add-item-form input[type="number"]:focus,
+.add-item-form select:focus,
+.add-item-form textarea:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 8px rgb(40 167 69 / 0.3);
+}
+
+.add-item-form button[type="submit"] {
+  margin-top: 15px;
+  padding: 10px 22px;
+  background-color: var(--primary-green);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-item-form button[type="submit"]:hover {
+  background-color: var(--primary-green-dark);
+}
+
+/* --- Thông báo lỗi --- */
+.errors {
+  margin: 0 auto 10px;
+  padding: 10px 15px;
+  background-color: var(--error-bg);
+  border: 1.5px solid var(--error-border);
+  border-radius: 8px;
+  color: var(--error-color);
+  font-weight: 600;
+  max-width: 1080px;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 720px) {
+  .menu-card {
+    width: 45vw;
+  }
+
+  .top-header button {
+    padding: 8px 14px;
+    font-size: 14px;
+    height: 36px;
+  }
+
+  .info-section {
+    max-width: 100%;
+  }
+
+  .add-item-form .form-col {
+    flex-basis: 100%;
+  }
+
+  .menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 400px) {
+  .menu-card {
+    width: 90vw;
+  }
+
+  .top-header {
+    padding: 0 10px;
+  }
+
+  .menu-card h4 {
+    font-size: 16px;
+  }
+
+  .menu-card p {
+    font-size: 14px;
+  }
+
+  .add-item-form {
+    padding: 15px 20px;
+  }
+}

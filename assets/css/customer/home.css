@@ -223,6 +223,7 @@ header {
 .collections h2 {
   margin-bottom: 15px;
   color: #388e85;
+  font-weight: 700;
 }
 
 .collection-list {
@@ -237,11 +238,16 @@ header {
   padding: 15px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .collection-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .collection-card img {
@@ -249,48 +255,79 @@ header {
   height: 200px;
   object-fit: cover;
   border-radius: 8px;
+  margin-bottom: 12px;
 }
 
 .collection-card p {
-  margin: 10px 0;
-  font-size: 14px;
+  margin: 8px 0;
+  font-size: 15px;
+  color: #333;
+  font-weight: 600;
 }
 
-.action-buttons {
+.collection-card p + p {
+  font-weight: 700;
+  color: #388e85;
+}
+
+.button-group {
   display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  border: 2px solid #388e85;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.button-group form {
+  display: flex;
+  width: 100%;
   justify-content: space-between;
-  gap: 10px;
-  margin-top: 10px;
+  margin: 0;
 }
 
-.action-buttons .btn-detail,
-.action-buttons .btn-add-cart {
+.button-group form a,
+.button-group form button {
   flex: 1;
-  padding: 8px 16px;
-  border-radius: 25px;
-  font-size: 14px;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.action-buttons .btn-detail {
-  background-color: #ff9f00;
+  padding: 15px 0;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  outline: none;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  border-radius: 0;
+  white-space: nowrap;
 }
 
-.action-buttons .btn-detail:hover {
-  background-color: #e68900;
+.button-group i {
+  margin-right: 6px;
+}
+
+.btn-detail {
+  background-color: #ffa726;
+}
+
+.btn-detail:hover {
+  background-color: #fb8c00;
   transform: translateY(-3px);
 }
 
-.action-buttons .btn-add-cart {
+.btn-add-cart {
   background-color: #004d40;
-  color: white;
 }
 
-.action-buttons .btn-add-cart:hover {
-  background-color: #388e85;
+.btn-add-cart:hover {
+  background-color: #00332c;
+  transform: translateY(-3px);
 }
 
 /* ========================================

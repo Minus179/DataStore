@@ -1,0 +1,167 @@
+/* DataStore/assets/css/store_owner/home_1.css */
+
+/* CSS cho header ngang mới */
+.top-header {
+  background-color: #222;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px 25px;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-bottom: 2px solid #444;
+  height: 60px;
+  box-sizing: border-box;
+}
+
+.top-header button {
+  background: none;
+  border: none;
+  color: #ddd;
+  font-weight: 600;
+  margin-right: 20px;
+  cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  font-size: 16px;
+  line-height: 1.2;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-header button:hover,
+.top-header button.active {
+  background-color: #555;
+  color: #fff;
+}
+
+/* Phần nội dung chính trong main-content */
+.main-content {
+  padding: 20px;
+}
+
+/* COMMON: Grid chứa các card món cho tất cả tab */
+/* Grid chứa các card căn chỉnh từ trái sang phải */
+.menu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start; /* căn từ trái sang phải */
+}
+
+/* Card món: fix width và height để đều nhau */
+.menu-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 220px; /* rộng hơn chút */
+  height: 320px; /* chiều cao cố định để card đều nhau */
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* Hover hiệu ứng */
+.menu-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgb(0 0 0 / 0.15);
+}
+
+/* Ảnh món to hơn */
+.menu-card img {
+  width: 100%;
+  height: 160px; /* tăng lên 160px */
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+/* Tên món */
+.menu-card h4 {
+  font-size: 1.1rem;
+  margin: 0 0 8px;
+  text-align: center;
+  color: #333;
+}
+
+/* Giá tiền */
+.menu-card p {
+  font-weight: 600;
+  color: #e91e63; /* hồng nổi bật */
+  margin: 0 0 12px;
+}
+
+/* Nút hành động (Thêm, Sửa, Xóa, Xem chi tiết) */
+.menu-card .action-btn,
+.menu-card .edit-btn,
+.menu-card .delete-btn,
+.menu-card .detail-btn {
+  display: block;
+  width: 100%;
+  padding: 8px 18px;
+  text-align: center;
+  background-color: #0056b3;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  box-sizing: border-box;
+  margin-top: auto; /* đẩy nút xuống dưới */
+}
+
+.menu-card .action-btn:hover,
+.menu-card .edit-btn:hover,
+.menu-card .delete-btn:hover,
+.menu-card .detail-btn:hover {
+  background-color: #004494;
+}
+
+/* Reset style nút button xóa nếu dùng button */
+button.delete-btn {
+  border: none;
+  outline: none;
+}
+
+/* Style riêng cho tab sửa và xóa (bọc trong container #sua, #xoa) */
+#sua,
+#xoa {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+/* Responsive cho màn nhỏ */
+@media (max-width: 600px) {
+  .menu-card {
+    width: 100%;
+  }
+  .top-header {
+    padding: 10px 15px;
+  }
+  .top-header button {
+    padding: 8px 15px;
+    font-size: 14px;
+    margin-right: 12px;
+  }
+  .main-content {
+    padding: 15px;
+  }
+}
+
+/* Thêm hiệu ứng active rõ ràng cho button chuyển tab */
+.top-header button.active {
+  box-shadow: inset 0 -3px 0 0 #e91e63;
+  font-weight: 700;
+}

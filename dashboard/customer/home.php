@@ -43,7 +43,7 @@ if ($cartData = $cartResult->fetch_assoc()) {
     <meta charset="UTF-8">
     <title>Trang chính - Khách hàng</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../assets/css/customer/dashboard_customer.css?v=<?=time()?>">
+    <link rel="stylesheet" href="../../assets/css/customer/home.css?v=<?=time()?>">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -140,16 +140,22 @@ if ($cartData = $cartResult->fetch_assoc()) {
             while ($item = $result_food->fetch_assoc()) {
                 ?>
                 <div class="collection-card">
-                <img src="/DataStore/assets/images/food/<?= htmlspecialchars($item['image_path']) ?>" 
-                alt="<?= htmlspecialchars($item['name']) ?>" 
-                width="100">
+                    <img src="/DataStore/assets/images/food/<?= htmlspecialchars($item['image_path']) ?>" 
+                         alt="<?= htmlspecialchars($item['name']) ?>" 
+                         width="100">
                     <p><?= htmlspecialchars($item['name']) ?></p>
                     <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                    <form action="add_to_cart.php" method="post" class="action-buttons">
-                    <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                    <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">Xem chi tiết</a>
-                    <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                </form>
+                    <div class="button-group">
+                        <form action="add_to_cart.php" method="post">
+                            <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                            <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">
+                                <i class="fas fa-info-circle"></i> Xem chi tiết
+                            </a>
+                            <button type="submit" class="btn-add-cart">
+                                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <?php
             }
@@ -173,16 +179,22 @@ if ($cartData = $cartResult->fetch_assoc()) {
             while ($item = $result_drink->fetch_assoc()) {
                 ?>
                 <div class="collection-card">
-                <img src="/DataStore/assets/images/drink/<?= htmlspecialchars($item['image_path']) ?>" 
-                alt="<?= htmlspecialchars($item['name']) ?>" 
-                width="100">
+                    <img src="/DataStore/assets/images/drink/<?= htmlspecialchars($item['image_path']) ?>" 
+                         alt="<?= htmlspecialchars($item['name']) ?>" 
+                         width="100">
                     <p><?= htmlspecialchars($item['name']) ?></p>
                     <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                    <form action="add_to_cart.php" method="post" class="action-buttons">
-                    <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
-                    <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">Xem chi tiết</a>
-                    <button type="submit" class="btn-add-cart">Thêm vào giỏ</button>
-                </form>
+                    <div class="button-group">
+                        <form action="add_to_cart.php" method="post">
+                            <input type="hidden" name="item_id" value="<?= $item['id'] ?>">
+                            <a href="items_detail.php?id=<?= $item['id'] ?>" class="btn-detail">
+                                <i class="fas fa-info-circle"></i> Xem chi tiết
+                            </a>
+                            <button type="submit" class="btn-add-cart">
+                                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 <?php
             }
@@ -190,6 +202,7 @@ if ($cartData = $cartResult->fetch_assoc()) {
         ?>
     </div>
 </section>
+
 
 <footer class="footer">
   <div class="footer-container">
