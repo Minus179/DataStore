@@ -78,7 +78,7 @@ header {
   width: 100%;
   background-color: #66b7a6;
   position: relative;
-  padding-top: 25px;
+  padding-top: 30px; /* tăng tí cho marquee khỏi dính ảnh */
 }
 
 .marquee-container {
@@ -89,22 +89,27 @@ header {
   color: #004d40;
   font-size: 16px;
   text-align: center;
-  padding: 3px 0;
+  padding: 6px 0;
   z-index: 2;
 }
 
 .banner {
   display: flex;
-  gap: 15px;
+  gap: 14px;
   overflow-x: auto;
-  padding: 10px;
+  padding: 15px 25px 25px; /* tăng padding để không gian rộng hơn */
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .banner img {
-  height: 250px;
+  width: 400px; /* tăng chiều rộng */
+  height: 250px; /* tăng chiều cao */
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
+  scroll-snap-align: center;
 }
 
 .banner img:hover {
@@ -204,8 +209,8 @@ header {
 }
 
 .feature i {
-  font-size: 24px;
-  margin-bottom: 5px;
+  font-size: 30px;
+  margin-bottom: 10px; /* Tăng chút khoảng cách */
 }
 
 .feature:hover {
@@ -216,8 +221,30 @@ header {
 /* ========================================
    DANH MỤC SẢN PHẨM
 ======================================== */
+
+.collections-wrapper {
+  background-color: #388e85; /* nền trắng */
+  padding: 5px 0px; /* khoảng cách trong */
+  border-radius: 15px; /* bo góc mềm mại */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd; /* viền mỏng nhẹ */
+  margin-bottom: 20px; /* khoảng cách bên dưới */
+}
+
+.collections-wrapper h2 {
+  background-color: #fb8c00;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: inline-block;
+  margin-bottom: 20px;
+  font-weight: 700;
+  transform: translateY(-3px);
+}
+
 .collections {
   padding: 20px 30px;
+  overflow-x: auto;
 }
 
 .collections h2 {
@@ -226,18 +253,25 @@ header {
   font-weight: 700;
 }
 
+/* Chuyển grid sang flex để cuộn ngang */
 .collection-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
   gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scroll-snap-type: x mandatory; /* Snap card theo trục X */
 }
 
+/* Mỗi card snap vào khung nhìn */
 .collection-card {
+  flex: 0 0 auto;
+  width: 300px; /* Hoặc 240px nếu muốn to hơn */
+  scroll-snap-align: start;
   background-color: white;
   border-radius: 10px;
-  padding: 15px;
+  padding: 10px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
@@ -268,6 +302,18 @@ header {
 .collection-card p + p {
   font-weight: 700;
   color: #388e85;
+}
+.collection-card p:first-of-type {
+  font-size: 18px;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+.collection-card p:last-of-type {
+  font-size: 17px;
+  font-weight: 900;
+  color: #d32f2f;
 }
 
 .button-group {

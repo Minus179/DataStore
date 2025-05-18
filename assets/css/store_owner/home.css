@@ -37,7 +37,7 @@ body {
 .sidebar h2 {
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.5rem; /* tăng tí để tách rõ */
+  margin-bottom: 1.5rem;
   user-select: none;
   letter-spacing: 1.5px;
   text-transform: uppercase;
@@ -46,20 +46,20 @@ body {
 .sidebar ul {
   list-style: none;
   padding-left: 0;
-  margin: 0; /* reset margin mặc định */
+  margin: 0;
 }
 
 .sidebar ul li {
-  margin-bottom: 1.25rem; /* đều hơn */
+  margin-bottom: 1.25rem;
 }
 
 .sidebar ul li a {
   color: #ecf0f1;
   text-decoration: none;
   font-weight: 600;
-  padding: 0.6rem 0.5rem; /* tăng padding cho dễ bấm */
+  padding: 0.6rem 0.5rem;
   display: block;
-  border-radius: 6px; /* tròn hơn */
+  border-radius: 6px;
   transition: background-color 0.3s ease;
   user-select: none;
 }
@@ -74,7 +74,7 @@ body {
 /* ========== MAIN CONTENT ========== */
 .main-content {
   margin-left: 220px;
-  padding: 2rem 2.5rem; /* đều 2.5 bên, gọn */
+  padding: 2rem 2.5rem;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -88,12 +88,12 @@ body {
 .top-header {
   display: flex;
   align-items: center;
-  gap: 1.2rem; /* tăng gap cho thoáng */
+  gap: 1.2rem;
   margin-bottom: 1.5rem;
 }
 
 .back-btn {
-  font-size: 1.6rem; /* tăng cỡ chút */
+  font-size: 1.6rem;
   background-color: #388e85;
   border-radius: 50%;
   border: none;
@@ -118,10 +118,10 @@ body {
 
 .header-text {
   font-weight: 700;
-  font-size: 1.9rem; /* tăng nhẹ để nổi */
+  font-size: 1.9rem;
   user-select: none;
   letter-spacing: 1.2px;
-  flex-grow: 1; /* để header text chiếm hết chỗ còn lại */
+  flex-grow: 1;
 }
 
 .header-wrapper {
@@ -138,7 +138,7 @@ body {
   gap: 1rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: 6px; /* tạo khoảng cho scrollbar */
+  padding-bottom: 6px;
 }
 
 .scrollable-tabs .tab {
@@ -259,7 +259,6 @@ body {
   margin-bottom: 0.8rem;
 }
 
-/* Nút sửa & xóa */
 .menu-card-actions {
   width: 100%;
   display: flex;
@@ -369,8 +368,8 @@ form button[type="submit"] {
   border-radius: 12px;
   cursor: pointer;
   margin-top: 12px;
-  box-shadow: 0 5px 15px rgba(56, 142, 133, 0.6);
-  transition: background-color 0.35s ease;
+  box-shadow: 0 5px 15px rgba(56, 142, 133, 0.4);
+  transition: background-color 0.3s ease;
 }
 
 form button[type="submit"]:hover,

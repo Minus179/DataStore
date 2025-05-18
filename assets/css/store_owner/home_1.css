@@ -165,3 +165,172 @@ button.delete-btn {
   box-shadow: inset 0 -3px 0 0 #e91e63;
   font-weight: 700;
 }
+/* Container ngoài chứa menu grid và form sửa */
+/* Container chứa menu grid và form sửa - flex ngang */
+/* Container ngoài chứa menu grid và form sửa */
+.editing-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  align-items: flex-start; /* canh top cho form và menu */
+}
+
+/* Khi đang chỉnh sửa */
+.editing-container.editing {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+/* Grid menu món khi đang chỉnh sửa */
+.editing-container.editing .menu-grid {
+  width: 55%;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ẩn card trừ card đang chỉnh sửa */
+.editing-container.editing .menu-card {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Card đang sửa - hiển thị, căn sát trái */
+.editing-container.editing .menu-card.editing-card {
+  display: flex !important;
+  width: 220px;
+  transform: translateX(0);
+  box-shadow: 0 0 12px rgba(0, 123, 255, 0.7);
+  border: 2px solid #007bff;
+  background-color: #fff;
+  opacity: 1;
+  z-index: 10;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+/* Ảnh trong form chỉnh sửa món - vuông đều nhau */
+#edit-form-container img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto 20px auto;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form sửa món - chiếm 40% bên phải, tối ưu lại chiều cao và padding */
+.editing-container.editing #edit-form-container {
+  display: block;
+  width: 40%;
+  background: #fefefe;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 50px 50px 50px 50px;
+  box-sizing: border-box;
+  min-height: 350px;
+  max-height: 600px;
+  overflow-y: auto; /* cuộn nếu form dài */
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+}
+
+/* Các input, textarea, select trong form */
+#edit-form-container input[type="text"],
+#edit-form-container input[type="number"],
+#edit-form-container textarea,
+#edit-form-container select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#edit-form-container input[type="text"]:focus,
+#edit-form-container input[type="number"]:focus,
+#edit-form-container textarea:focus,
+#edit-form-container select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button submit trong form */
+#edit-form-container button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+#edit-form-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive cho màn nhỏ - chuyển flex thành cột */
+@media (max-width: 800px) {
+  .editing-container {
+    flex-direction: column;
+  }
+  .editing-container.editing #edit-form-container {
+    width: 100% !important;
+    max-height: none;
+    margin-bottom: 20px;
+    overflow-y: visible;
+  }
+  .editing-container.editing .menu-grid {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+  .editing-container.editing .menu-card {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    margin-bottom: 15px;
+    opacity: 1 !important;
+  }
+  /* Ảnh món trong card chỉnh sửa */
+  .editing-container.editing .menu-card.editing-card img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* Responsive: màn nhỏ thì bỏ flex ngang, form chiếm 100% */
+@media (max-width: 800px) {
+  .editing-container {
+    flex-direction: column;
+  }
+  #edit-form-container {
+    width: 100% !important;
+    min-height: auto;
+    margin-bottom: 20px;
+  }
+  .editing-container.editing .menu-grid {
+    width: 100% !important;
+    flex-wrap: wrap !important;
+  }
+  .editing-container.editing .menu-card {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    margin-bottom: 15px;
+  }
+}

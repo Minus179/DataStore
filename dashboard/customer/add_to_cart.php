@@ -15,7 +15,7 @@ if ($conn->connect_error) {
     die("Kết nối thất bại: " . $conn->connect_error);
 }
 
-// Xử lý POST thêm món
+// Xử lý POST thêm món (add to cart)
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['item_id'], $_POST['csrf_token'])) {
     if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
         die("Token không hợp lệ. Vui lòng tải lại trang.");
@@ -43,20 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['item_id'], $_POST['csr
                 'id' => $item['id'],
                 'name' => $item['name'],
                 'price' => $item['price'],
-                'image' => $item['image'],
+                'image' => $item['image_path'], // Chỉnh tên đúng trường image_path trong DB
                 'quantity' => $quantity
             ];
         }
+        $stmt->close();
     }
 
     header("Location: cart.php");
     exit();
 }
 
-// Lấy danh sách món hiển thị demo (bạn thay bằng query thực tế)
+// Lấy danh sách món hiển thị demo (thay bằng query thực tế nếu muốn)
 $items = [
-    ['id' => 1, 'name' => 'Món ăn 1', 'price' => 50000, 'image' => 'assets/images/sample-item.jpg', 'description' => 'Mô tả món ăn 1'],
-    ['id' => 2, 'name' => 'Món ăn 2', 'price' => 60000, 'image' => 'assets/images/sample-item2.jpg', 'description' => 'Mô tả món ăn 2'],
+    ['id' => 1, 'name' => 'Món ăn 1', 'price' => 50000, 'image' => '../../assets/images/food/sample-item.jpg', 'description' => 'Mô tả món ăn 1'],
+    ['id' => 2, 'name' => 'Món ăn 2', 'price' => 60000, 'image' => '../../assets/images/food/sample-item2.jpg', 'description' => 'Mô tả món ăn 2'],
 ];
 ?>
 
@@ -67,7 +68,6 @@ $items = [
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Thêm món vào giỏ hàng</title>
 <style>
-    /* Giữ nguyên CSS bạn có */
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
@@ -86,6 +86,8 @@ $items = [
         padding: 10px 20px;
         background-color: #d35400;
         border-radius: 5px;
+        display: inline-block;
+        margin-top: 20px;
     }
     .container {
         width: 80%;

@@ -35,11 +35,11 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button class="tab-button active" data-target="all">Tất cả món</button>
         <button class="tab-button" data-target="food">Món ăn</button>
         <button class="tab-button" data-target="drink">Món nước</button>
+        <button class="tab-button" data-target="profile_store">Cập nhật thông tin</button>
         <button class="tab-button" data-target="them">Thêm món</button>
         <button class="tab-button" data-target="sua">Sửa món</button>
         <button class="tab-button" data-target="xoa">Xóa món</button>
     </header>
-
     <section id="content-area">
 
         <!-- Tab: Tất cả món -->
@@ -102,6 +102,35 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
             ?>
         </div>
+        <!-- Tab: Cập nhật thông tin quán -->
+        <div id="profile_store" class="tab-content" style="display:none;">
+            <h3>Cập nhật thông tin quán</h3>
+            <?php
+            // Lấy thông tin quán hiện tại
+            $stmtStore = $pdo->prepare('SELECT * FROM store_info WHERE owner_id = ? LIMIT 1');
+            $stmtStore->execute([$_SESSION['user_id']]);
+            $store = $stmtStore->fetch(PDO::FETCH_ASSOC);
+
+            if (!$store) {
+                $store = ['name' => '', 'address' => '', 'phone' => '', 'description' => ''];
+            }
+            ?>
+            <form action="edit_profile/update_store_info.php" method="post" class="form-section">
+                <label>Tên quán:</label>
+                <input type="text" name="name" value="<?= htmlspecialchars($store['name']) ?>" required />
+
+                <label>Địa chỉ:</label>
+                <input type="text" name="address" value="<?= htmlspecialchars($store['address']) ?>" required />
+
+                <label>Số điện thoại:</label>
+                <input type="text" name="phone" value="<?= htmlspecialchars($store['phone']) ?>" required pattern="\d+" title="Chỉ nhập số" />
+
+                <label>Mô tả quán:</label>
+                <textarea name="description" rows="4" placeholder="Mô tả về quán..." required><?= htmlspecialchars($store['description']) ?></textarea>
+
+                <button type="submit">Cập nhật thông tin</button>
+            </form>
+        </div>
 
         <!-- Tab: Thêm món -->
         <div id="them" class="tab-content" style="display:none;">
@@ -141,36 +170,33 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </div>
 
-<!-- Tab: Sửa món -->
-<div id="sua" class="tab-content" style="display:none;">
-    <h3>Chọn món để sửa</h3>
-    <div class="menu-grid" id="edit-menu-grid" style="position: relative; display: flex; flex-wrap: wrap; gap: 20px;">
-        <?php foreach ($items as $item): ?>
-            <div class="menu-card edit-card" 
-                data-id="<?= htmlspecialchars($item['id'], ENT_QUOTES) ?>" 
-                data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>"
-                data-price="<?= htmlspecialchars($item['price'], ENT_QUOTES) ?>" 
-                data-type="<?= htmlspecialchars($item['type'], ENT_QUOTES) ?>"
-                data-description="<?= htmlspecialchars($item['description'], ENT_QUOTES) ?>"
-                data-image="<?= htmlspecialchars($item['image_path'], ENT_QUOTES) ?>"
-                style="width: 200px; transition: transform 0.3s ease;">
-                
-                <img src="../../assets/images/<?= htmlspecialchars($item['type'], ENT_QUOTES) ?>/<?= htmlspecialchars($item['image_path'], ENT_QUOTES) ?>"
-                     alt="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>" />
-                
-                <h4><?= htmlspecialchars($item['name'], ENT_QUOTES) ?></h4>
-                <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                <button class="edit-btn">Sửa</button>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</div>
+        <!-- Tab: Sửa món -->
+        <div id="sua" class="tab-content" style="display:none;">
+            <h3>Chỉnh sửa thông tin món tại đây</h3>
+            <div class="menu-grid" id="edit-menu-grid">
+                <?php foreach ($items as $item): ?>
+                    <div class="menu-card edit-card" 
+                        data-id="<?= htmlspecialchars($item['id'], ENT_QUOTES) ?>" 
+                        data-name="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>"
+                        data-price="<?= htmlspecialchars($item['price'], ENT_QUOTES) ?>" 
+                        data-type="<?= htmlspecialchars($item['type'], ENT_QUOTES) ?>"
+                        data-description="<?= htmlspecialchars($item['description'], ENT_QUOTES) ?>
+                        data-image="<?= htmlspecialchars($item['image_path'], ENT_QUOTES) ?>">
 
-            <!-- Form sửa món ẩn mặc định -->
-            <div id="edit-form-container" style="display:none; margin-top: 30px; border: 1px solid #ccc; padding: 20px; max-width: 500px;">
+                        <img src="../../assets/images/<?= htmlspecialchars($item['type'], ENT_QUOTES) ?>/<?= htmlspecialchars($item['image_path'], ENT_QUOTES) ?>" alt="<?= htmlspecialchars($item['name'], ENT_QUOTES) ?>" />
+                        <h4><?= htmlspecialchars($item['name'], ENT_QUOTES) ?></h4>
+                        <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <button type="button" class="edit-btn">Sửa</button>
+
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
+            <div id="edit-form-container" style="display:none;">
                 <h3>Chỉnh sửa món</h3>
                 <form id="edit-form" action="edit/sua.php" method="post" enctype="multipart/form-data" class="form-section">
                     <input type="hidden" name="id" id="edit-id" />
+
                     <label>Tên món:</label>
                     <input type="text" name="name" id="edit-name" required />
 
@@ -193,37 +219,52 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </select>
 
                     <label>Ảnh chính hiện tại:</label><br/>
-                    <img id="edit-current-image" src="" alt="Ảnh hiện tại" style="max-width: 150px; margin-bottom: 10px;" /><br/>
+                    <img id="edit-current-image" src="" alt="Ảnh hiện tại" /><br/>
 
                     <label>Thay đổi ảnh chính (nếu có):</label>
                     <input type="file" name="image_main" accept="image/*" />
 
                     <button type="submit">Lưu thay đổi</button>
-                    <button type="button" id="edit-cancel-btn" style="margin-left: 10px;">Hủy</button>
+                    <button type="button" id="edit-cancel-btn">Hủy</button>
                 </form>
             </div>
         </div>
 
-    <!-- Tab: Xóa món -->
-    <div id="xoa" class="tab-content" style="display:none;">
-        <h3>Chọn món để xóa</h3>
-        <div class="menu-grid">
-            <?php foreach ($items as $item): ?>
-                <div class="menu-card" data-id="<?= $item['id'] ?>">
-                    <img src="../../assets/images/<?= htmlspecialchars($item['type']) ?>/<?= htmlspecialchars($item['image_path']) ?>"
-                        alt="<?= htmlspecialchars($item['name']) ?>" />
-                    <h4><?= htmlspecialchars($item['name']) ?></h4>
-                    <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                    <button class="delete-btn">Xóa</button>
-                </div>
-            <?php endforeach; ?>
+        <!-- Tab: Xóa món -->
+        <div id="xoa" class="tab-content" style="display:none;">
+            <h3>Chọn món để xóa</h3>
+            <div class="menu-grid">
+                <?php foreach ($items as $item): ?>
+                    <div class="menu-card" data-id="<?= $item['id'] ?>">
+                        <img src="../../assets/images/<?= htmlspecialchars($item['type']) ?>/<?= htmlspecialchars($item['image_path']) ?>"
+                             alt="<?= htmlspecialchars($item['name']) ?>" />
+                        <h4><?= htmlspecialchars($item['name']) ?></h4>
+                        <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
+                        <button class="delete-btn">Xóa</button>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
-    </div>
-    </section>
 
+     </section>
 </main>
 
-<script src="../../assets/js/store_owner/quan_ly_menu.js?v=<?=time()?>"></script>
+<!-- Thông báo -->
+<div id="alert-box" style="display:none; position:fixed; bottom:20px; right:20px; background-color:#4caf50; color:#fff; padding:10px 20px; border-radius:5px; box-shadow:0 2px 5px rgba(0,0,0,0.2); z-index:1000; font-size:14px;"></div>
 
+<script src="../../assets/js/store_owner/quan_ly_menu.js?v=<?=time()?>"></script>
+<script src="../../assets/js/store_owner/sua_xoa.js?v=<?=time()?>"></script>
+<script src="../../assets/js/store_owner/sua.js?v=<?=time()?>"></script>
+<script>
+function showAlert(message, duration = 3000) {
+    const alertBox = document.getElementById('alert-box');
+    alertBox.textContent = message;
+    alertBox.style.display = 'block';
+    setTimeout(() => {
+        alertBox.style.display = 'none';
+    }, duration);
+}
+</script>
 </body>
 </html>
+

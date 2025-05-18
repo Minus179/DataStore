@@ -1,26 +1,43 @@
 <?php
 session_start();
 
-// Kiểm tra đăng nhập & phân quyền
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['store_owner', 'admin'])) {
-    header("Location: ../../login/login.php");
-    exit();
+try {
+    // Kiểm tra đăng nhập & phân quyền
+    if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['store_owner', 'admin'])) {
+        header("Location: ../../login/login.php");
+        exit();
+    }
+
+    require_once __DIR__ . '/../../includes/db.php';
+
+    // Lấy owner_id từ session
+    $owner_id = $_SESSION['user_id'];
+
+    // Lấy danh sách món hàng (đã chuẩn bị câu lệnh)
+    $stmt = $pdo->prepare('SELECT * FROM menu_items ORDER BY created_at DESC');
+    $stmt->execute();
+    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Lấy thông tin quán theo owner_id
+    $stmt = $pdo->prepare("SELECT * FROM store_info WHERE owner_id = ?");
+    $stmt->execute([$owner_id]);
+    $store_info = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Nếu chưa có thông tin, tạo mảng mặc định để tránh lỗi
+    if (!$store_info) {
+        $store_info = [
+            'name' => '',
+            'address' => '',
+            'phone' => '',
+            'email' => '',
+            'description' => '',
+            'avatar' => 'default_store.png'
+        ];
+    }
+} catch (PDOException $e) {
+    // Bật debug hoặc log lỗi tùy môi trường dev/prod
+    die("Lỗi kết nối hoặc truy vấn cơ sở dữ liệu: " . $e->getMessage());
 }
-
-require_once __DIR__ . '/../../includes/db.php';
-
-// Lấy danh sách món hàng từ DB
-$stmt = $pdo->query('SELECT * FROM menu_items ORDER BY created_at DESC');
-$items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Thông tin quán giả lập (có thể lấy từ DB nếu có bảng info quán)
-$store_info = [
-    'name' => 'Quán Ngọc Sơn Food',
-    'address' => '123, Quy Nhơn, Gia Lai',
-    'phone' => '0909 123 456',
-    'email' => 'contact@ngocsonfood.vn',
-    'description' => 'Quán chuyên phục vụ các món ăn và thức uống tươi ngon, chuẩn vị Việt.'
-];
 ?>
 
 <!DOCTYPE html>
@@ -113,17 +130,39 @@ $store_info = [
             ?>
         </div>
 
-        <!-- Tab: Thông tin quán -->
-        <div id="info" class="tab-content" style="display:none;">
-            <h3>Thông tin quán</h3>
-            <div class="info-section">
-                <p><strong>Tên quán:</strong> <?= htmlspecialchars($store_info['name']) ?></p>
-                <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($store_info['address']) ?></p>
-                <p><strong>Điện thoại:</strong> <?= htmlspecialchars($store_info['phone']) ?></p>
-                <p><strong>Email:</strong> <?= htmlspecialchars($store_info['email']) ?></p>
-                <p><strong>Mô tả:</strong> <?= htmlspecialchars($store_info['description']) ?></p>
-            </div>
-        </div>
+<!-- Tab: Thông tin quán -->
+<div id="info" class="tab-content" style="display:none;">
+    <h3>Thông tin quán</h3>
+    <div class="info-section">
+        <?php if ($_SESSION['role'] === 'owner'): ?>
+            <form method="POST" action="update_store_info.php">
+                <label><strong>Tên quán:</strong></label><br>
+                <input type="text" name="name" value="<?= htmlspecialchars($store_info['name']) ?>"><br>
+
+                <label><strong>Địa chỉ:</strong></label><br>
+                <input type="text" name="address" value="<?= htmlspecialchars($store_info['address']) ?>"><br>
+
+                <label><strong>Điện thoại:</strong></label><br>
+                <input type="text" name="phone" value="<?= htmlspecialchars($store_info['phone']) ?>"><br>
+
+                <label><strong>Email:</strong></label><br>
+                <input type="email" name="email" value="<?= htmlspecialchars($store_info['email']) ?>"><br>
+
+                <label><strong>Mô tả:</strong></label><br>
+                <textarea name="description"><?= htmlspecialchars($store_info['description']) ?></textarea><br>
+
+                <button type="submit">Cập nhật thông tin</button>
+            </form>
+        <?php else: ?>
+            <!-- Khách hàng chỉ được xem -->
+            <p><strong>Tên quán:</strong> <?= htmlspecialchars($store_info['name']) ?></p>
+            <p><strong>Địa chỉ:</strong> <?= htmlspecialchars($store_info['address']) ?></p>
+            <p><strong>Điện thoại:</strong> <?= htmlspecialchars($store_info['phone']) ?></p>
+            <p><strong>Email:</strong> <?= htmlspecialchars($store_info['email']) ?></p>
+            <p><strong>Mô tả:</strong> <?= htmlspecialchars($store_info['description']) ?></p>
+        <?php endif; ?>
+    </div>
+</div>
     </section>
 </main>
 
@@ -138,7 +177,7 @@ $store_info = [
             if (button.id === 'logout-button') {
                 // Gửi request logout rồi redirect (có thể làm ajax hoặc đơn giản)
                 // Ở đây redirect thẳng, bạn nhớ tạo file logout.php xử lý session_destroy()
-                window.location.href = '../../login/logout.php';
+                window.location.href = '../../login/login.php';
                 return;
             }
 

@@ -1,84 +1,87 @@
 <?php
-include("../database/connection.php");
+header('Content-Type: application/json');
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM items WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $item = $result->fetch_assoc();
+// Cấu hình kết nối database
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "datastore_food";
+
+// Kết nối DB
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    echo json_encode(['success' => false, 'message' => 'Kết nối database thất bại']);
+    exit;
 }
 
-if (isset($_POST['update'])) {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $price = $_POST['price'];
-    $type = $_POST['type'];
-    $category = $_POST['category'];
-    $image_path = $_POST['image_path'];
-    $description = $_POST['description'];
-    $popularity = $_POST['popularity'];
-    $description_image = $_POST['description_image'];
-    $quantity = $_POST['quantity'];
-    $additional_info = $_POST['additional_info'];
+// Lấy dữ liệu từ POST
+$id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+$price = isset($_POST['price']) ? intval($_POST['price']) : 0;
+$type = isset($_POST['type']) ? trim($_POST['type']) : '';
+$description = isset($_POST['description']) ? trim($_POST['description']) : '';
 
-    $sql = "UPDATE items SET name=?, price=?, type=?, category=?, image_path=?, description=?, popularity=?, description_image=?, quantity=?, additional_info=? WHERE id=?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sdsssssisii", $name, $price, $type, $category, $image_path, $description, $popularity, $description_image, $quantity, $additional_info, $id);
+// Validate dữ liệu
+if ($id <= 0 || $name === '' || $price < 0 || !in_array($type, ['food', 'drink'])) {
+    echo json_encode(['success' => false, 'message' => 'Dữ liệu không hợp lệ']);
+    exit;
+}
 
-    if ($stmt->execute()) {
-        header("Location: quan_ly_menu.php");
-        exit();
-    } else {
-        echo "Lỗi khi cập nhật: " . $conn->error;
+$imageUrl = null;
+
+// Xử lý upload ảnh nếu có
+if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    $fileMimeType = mime_content_type($_FILES['image']['tmp_name']);
+
+    if (!in_array($fileMimeType, $allowedMimeTypes)) {
+        echo json_encode(['success' => false, 'message' => 'Ảnh phải là JPG, PNG hoặc GIF']);
+        exit;
     }
+
+    // Tạo thư mục upload nếu chưa tồn tại
+    $uploadDir = __DIR__ . '/../assets/uploads/menu_images/';
+    if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+        echo json_encode(['success' => false, 'message' => 'Không tạo được thư mục lưu ảnh']);
+        exit;
+    }
+
+    // Đổi tên file ảnh tránh trùng
+    $ext = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+    $newFileName = uniqid('menu_', true) . '.' . $ext;
+    $uploadFilePath = $uploadDir . $newFileName;
+
+    if (!move_uploaded_file($_FILES['image']['tmp_name'], $uploadFilePath)) {
+        echo json_encode(['success' => false, 'message' => 'Không lưu được ảnh']);
+        exit;
+    }
+
+    // Đường dẫn URL ảnh dùng trong frontend
+    $imageUrl = '/assets/uploads/menu_images/' . $newFileName;
 }
-?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Sửa món</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../assets/css/style.css">
-</head>
-<body>
-    <h2>Sửa Thông Tin Món</h2>
-    <form method="post">
-        <input type="hidden" name="id" value="<?= $item['id'] ?>">
-        <label>Tên món:</label>
-        <input type="text" name="name" value="<?= $item['name'] ?>" required><br>
+// Câu lệnh SQL cập nhật
+if ($imageUrl !== null) {
+    $stmt = $conn->prepare("UPDATE menu SET name=?, price=?, type=?, description=?, image_url=? WHERE id=?");
+    $stmt->bind_param("sisssi", $name, $price, $type, $description, $imageUrl, $id);
+} else {
+    $stmt = $conn->prepare("UPDATE menu SET name=?, price=?, type=?, description=? WHERE id=?");
+    $stmt->bind_param("sissi", $name, $price, $type, $description, $id);
+}
 
-        <label>Giá:</label>
-        <input type="number" name="price" value="<?= $item['price'] ?>" required><br>
+// Thực thi câu lệnh và trả kết quả
+if ($stmt->execute()) {
+    echo json_encode([
+        'success' => true,
+        'message' => 'Cập nhật thành công',
+        'imageUrl' => $imageUrl
+    ]);
+} else {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Lỗi cập nhật: ' . $stmt->error
+    ]);
+}
 
-        <label>Loại:</label>
-        <input type="text" name="type" value="<?= $item['type'] ?>" required><br>
-
-        <label>Phân loại:</label>
-        <input type="text" name="category" value="<?= $item['category'] ?>" required><br>
-
-        <label>Đường dẫn ảnh chính:</label>
-        <input type="text" name="image_path" value="<?= $item['image_path'] ?>"><br>
-
-        <label>Mô tả:</label>
-        <textarea name="description" required><?= $item['description'] ?></textarea><br>
-
-        <label>Độ phổ biến:</label>
-        <input type="number" name="popularity" value="<?= $item['popularity'] ?>" min="0" max="5"><br>
-
-        <label>Ảnh mô tả:</label>
-        <input type="text" name="description_image" value="<?= $item['description_image'] ?>"><br>
-
-        <label>Số lượng:</label>
-        <input type="number" name="quantity" value="<?= $item['quantity'] ?>"><br>
-
-        <label>Thông tin thêm:</label>
-        <textarea name="additional_info"><?= $item['additional_info'] ?></textarea><br>
-
-        <button type="submit" name="update">Cập nhật</button>
-    </form>
-</body>
-</html>
+$stmt->close();
+$conn->close();
