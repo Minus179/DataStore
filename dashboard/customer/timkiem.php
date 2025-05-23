@@ -51,21 +51,40 @@ $categories = [
     'Phở' => '🍲',
     'Bún' => '🍜',
     'Bánh Canh' => '🍲',
-    'Cơm' => '🍚',
-    'Món chính' => '🍛',
-    'Cà phê' => '☕'
+    'Cơm' => '🍚',  
+    'Cà phê' => '☕',
+    'Hủ Tiếu' => '🥣',
+    'Bánh Mì' => '🥖',
+    'Cháo' => '🍲',
+    'Gỏi Cuốn' => '🥟',
+    'Nem' => '🍤',
+    'Lẩu' => '🍲',
+    'Trà sữa' => '🧋',
+    'Sinh Tố' => '🍹',
+    'Nước ép' => '🧃',
+    'Trà' => '🍵',
+    'Kem' => '🍦',
+    'Bánh ngọt' => '🍰',
+    'Sushi' => '🍣',
 ];
 
 // Hàm lấy danh sách món theo loại và giới hạn
 function getMenuItemsByType($conn, $type, $limit = 10) {
-    $stmt = $conn->prepare("SELECT * FROM menu_items WHERE type = ? LIMIT ?");
-    $stmt->bind_param('si', $type, $limit);
+    // Kiểm tra $limit là số nguyên và an toàn trước khi đưa vào SQL
+    $limit = (int)$limit;
+
+    // Câu truy vấn với LIMIT được nối trực tiếp (đảm bảo $limit là số an toàn)
+    $sql = "SELECT * FROM menu_items WHERE type = ? LIMIT $limit";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $type);  // Chỉ bind param type, limit nối trực tiếp
     $stmt->execute();
     $result = $stmt->get_result();
     $items = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
     return $items;
 }
+
 
 $foodItems = getMenuItemsByType($conn, 'food');
 $drinkItems = getMenuItemsByType($conn, 'drink');

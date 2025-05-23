@@ -1,139 +1,157 @@
 <?php
 session_start();
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'customer') {
-    header("Location: ../../login/login.php");
+    header("Location: ../../../login/login.php");
     exit();
 }
 
-// Kết nối cơ sở dữ liệu
-include("../../includes/db.php");
+include("../../../includes/db.php");
+include("../../../includes/header.php");
 
-$user_id = $_SESSION['user_id'];
-
-// Lấy điểm hiện tại của người dùng từ cơ sở dữ liệu
-$query = "SELECT points FROM users WHERE id = '$user_id'";
-$result = mysqli_query($conn, $query);
-if ($result) {
-    $user = mysqli_fetch_assoc($result);
-    $current_points = $user['points'];
-} else {
-    die("Lỗi truy vấn: " . mysqli_error($conn));
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Xử lý vòng quay: Cộng điểm cho người chơi
-    $earned_points = rand(1, 100);  // Số điểm ngẫu nhiên người chơi nhận được (từ 1 đến 100)
-
-    // Cập nhật điểm người dùng trong cơ sở dữ liệu
-    $new_points = $current_points + $earned_points;
-    $update_query = "UPDATE users SET points = '$new_points' WHERE id = '$user_id'";
-    if (mysqli_query($conn, $update_query)) {
-        $message = "Chúc mừng! Bạn nhận được $earned_points điểm. Tổng điểm hiện tại: $new_points.";
-    } else {
-        $message = "Có lỗi xảy ra khi cập nhật điểm.";
-    }
-}
+$result = mysqli_query($conn, "SELECT * FROM games");
 ?>
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Mini Game - Vòng quay may mắn</title>
-    <link rel="stylesheet" href="../../assets/css/style.css">
+    <title>Mini Game</title>
+    <link rel="stylesheet" href="../../../assets/css/style.css">
     <style>
-        /* Thêm kiểu dáng cho vòng quay */
-        .wheel {
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            border: 10px solid #4CAF50;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            background-color: #f1f1f1;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
+       body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    margin: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .wheel div {
-            width: 50%;
-            height: 50%;
-            background-color: #FFC107;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 50%;
-            transform-origin: 100% 100%;
-        }
+h2 {
+    font-size: 2.8rem;
+    color: #0f4c5c;
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 700;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+}
 
-        .back-btn {
-            margin: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1200px;
+}
 
-        .back-btn:hover {
-            background-color: #0056b3;
-        }
+.game-card {
+    background: #ffffffcc;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(15, 76, 92, 0.15);
+    overflow: hidden;
+    text-decoration: none;
+    color: #1b262c;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-sizing: border-box;
+}
 
-        .message {
-            color: green;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+.game-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 30px rgba(15, 76, 92, 0.25);
+    background: #ffffffee;
+}
+
+.game-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 20px 20px 0 0;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.1));
+    transition: transform 0.3s ease;
+}
+
+.game-card:hover img {
+    transform: scale(1.05);
+}
+
+.game-card h3 {
+    font-size: 1.6rem;
+    margin: 18px 16px 8px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.game-card p {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #495057;
+    margin: 0 16px 20px;
+    line-height: 1.4;
+    font-weight: 400;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    body {
+        padding: 30px 15px;
+    }
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+    .game-card h3 {
+        font-size: 1.3rem;
+    }
+    .game-card p {
+        font-size: 0.9rem;
+    }
+}
+
     </style>
 </head>
 <body>
-    <button class="back-btn" onclick="history.back()">⬅️ Quay lại</button>
+    <h2>🎮 Danh sách Mini Game</h2>
+    <div class="game-list">
+        <?php while ($game = mysqli_fetch_assoc($result)) { ?>
+           <div class="game-card" data-game-file="<?= htmlspecialchars($game['file_game']) ?>">
+    <img src="../../../assets/images/games/<?= htmlspecialchars($game['avatar']) ?>" alt="Ảnh game">
+    <h3><?= htmlspecialchars($game['ten_game']) ?></h3>
+    <p><?= htmlspecialchars($game['mo_ta']) ?></p>   
+     <div id="game-container" style="margin-top: 40px; min-height: 400px; border: 2px solid #388e85; border-radius: 12px; padding: 20px; background: #fff;">
+    <p style="color: #388e85; font-weight: 600;">Chọn một game để chơi</p>
+</div>
+</div>
+        <?php } ?>
+    </div>*
+    
 
-    <main>
-        <h2>Mini Game - Vòng quay may mắn</h2>
-        <p>Quay vòng quay để nhận quà và điểm thưởng!</p>
 
-        <div class="wheel" id="wheel">
-            <div id="segment" style="transform: rotate(0deg);"></div>
-        </div>
-
-        <button onclick="spinWheel()" class="back-btn">Quay vòng quay</button>
-
-        <p id="result" style="font-size: 18px;"></p>
-
-        <?php if (isset($message)): ?>
-            <div class="message"><?php echo $message; ?></div>
-        <?php endif; ?>
-    </main>
-
-    <script>
-        let deg = 0;
-
-        function spinWheel() {
-            // Randomly generate a rotation degree
-            deg = Math.floor(Math.random() * 360) + 1800; // Cho vòng quay quay từ 1800 độ đến 2160 độ
-            document.getElementById('segment').style.transition = "transform 3s ease-out";
-            document.getElementById('segment').style.transform = `rotate(${deg}deg)`;
-
-            // Gửi yêu cầu POST để cập nhật điểm
-            setTimeout(() => {
-                fetch("<?php echo $_SERVER['PHP_SELF']; ?>", {
-                    method: "POST",
-                    body: new URLSearchParams({
-                        'spin': 'true',
-                    }),
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                })
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("result").innerText = data; // Hiển thị kết quả
-                });
-            }, 3000); // Chờ vòng quay hoàn tất (3 giây)
-        }
-    </script>
 </body>
+<script>
+    const gameCards = document.querySelectorAll('.game-card');
+    const gameContainer = document.getElementById('game-container');
+
+    gameCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const gameFile = card.getAttribute('data-game-file');
+            if (!gameFile) {
+                gameContainer.innerHTML = '<p style="color:red;">Game chưa có file để tải.</p>';
+                return;
+            }
+            // Load game bằng iframe
+            gameContainer.innerHTML = `
+                <iframe src="../../../games/${gameFile}" 
+                        style="width: 100%; height: 400px; border: none; border-radius: 12px;"
+                        allowfullscreen>
+                </iframe>
+            `;
+        });
+    });
+</script>
+
 </html>
