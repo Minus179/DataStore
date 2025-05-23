@@ -132,6 +132,100 @@
   color: var(--primary-green);
   margin-bottom: 12px;
 }
+/* --- Form cập nhật thông tin --- */
+.update-info-form {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 25px 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-primary);
+  box-sizing: border-box;
+}
+
+.update-info-form h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--primary-green-dark);
+  letter-spacing: 0.5px;
+}
+
+/* Grid layout cho form */
+.update-info-form .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* Cột form */
+.update-info-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Label */
+.update-info-form label {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Input + Textarea */
+.update-info-form input[type="text"],
+.update-info-form input[type="email"],
+.update-info-form input[type="tel"],
+.update-info-form textarea {
+  padding: 10px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.update-info-form input:focus,
+.update-info-form textarea:focus {
+  border-color: var(--primary-green);
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.3);
+  outline: none;
+}
+
+/* Submit button */
+.update-info-form button[type="submit"] {
+  margin-top: 25px;
+  width: 100%;
+  padding: 12px 0;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--primary-green);
+  color: white;
+  cursor: pointer;
+  transition: background-color var(--transition-default);
+}
+
+.update-info-form button[type="submit"]:hover {
+  background-color: var(--primary-green-dark);
+}
+
+/* Responsive tinh chỉnh */
+@media (max-width: 480px) {
+  .update-info-form {
+    padding: 20px;
+  }
+
+  .update-info-form h2 {
+    font-size: 20px;
+  }
+
+  .update-info-form button[type="submit"] {
+    font-size: 15px;
+  }
+}
 
 /* --- Khu vực thông tin --- */
 .info-section {
