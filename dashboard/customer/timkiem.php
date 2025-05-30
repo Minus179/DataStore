@@ -64,7 +64,6 @@ $categories = [
     'Nước ép' => '🧃',
     'Trà' => '🍵',
     'Kem' => '🍦',
-    'Bánh ngọt' => '🍰',
     'Sushi' => '🍣',
 ];
 
@@ -96,7 +95,7 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
     <meta charset="UTF-8" />
     <title>Tìm kiếm món ăn - DATASTORE FOOD</title>
     <link rel="stylesheet" href="../../assets/css/customer/timkiem.css?v=<?= time() ?>" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         // Fallback khi ảnh bị lỗi, đổi sang ảnh mặc định
         function handleImageError(img) {
@@ -136,10 +135,12 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
         </form>
     </section>
 
-    <!-- Gợi ý danh mục -->
-    <section class="categories">
-        <form class="category-form" action="timkiem.php" method="GET">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+
+<!-- Gợi ý danh mục -->
+<section class="categories">
+    <form class="category-form" action="timkiem.php" method="GET">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+        <div class="category-container">
             <?php foreach ($categories as $category => $icon): ?>
                 <button
                     type="submit"
@@ -150,8 +151,10 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
                     <?= $icon ?> <?= $category ?>
                 </button>
             <?php endforeach; ?>
-        </form>
-    </section>
+        </div>
+    </form>
+</section>
+
 
     <!-- Kết quả tìm kiếm -->
  <div class="scroll-container">
@@ -275,8 +278,7 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
 </div>
 </main>
 
-<footer>
-    <p>🚀 IT_STARTUP TEAM - Khởi nghiệp cùng bạn!</p>
-</footer>
+<?php include '../../includes/footer_1.php'; ?>
+
 </body>
 </html>

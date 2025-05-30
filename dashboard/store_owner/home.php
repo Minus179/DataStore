@@ -3,7 +3,7 @@ session_start();
 
 try {
     // Kiểm tra đăng nhập & phân quyền
-    if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['store_owner', 'admin'])) {
+    if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['store_owner'])) {
         header("Location: ../../login/login.php");
         exit();
     }
@@ -52,8 +52,6 @@ try {
     <link rel="stylesheet" href="../../assets/css/store_owner/home_1.css?v=<?=time()?>" />
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 <body>
 <?php include __DIR__ . '/sidebar.php'; ?>
@@ -137,52 +135,23 @@ try {
     <h3>Thông tin quán</h3>
     <div class="info-section">
         <?php if ($_SESSION['role'] === 'owner'): ?>
-            <form method="POST" action="update_store_info.php" enctype="multipart/form-data" class="add-item-form">
-                <div class="form-row">
-                    <div class="form-col">
-                        <label for="storeName"><i class="fas fa-store"></i> Tên quán</label>
-                        <input type="text" id="storeName" name="name" value="<?= htmlspecialchars($store_info['name']) ?>" required>
-                    </div>
-                    <div class="form-col">
-                        <label>Địa chỉ</label>
-                        <input type="text" name="address" value="<?= htmlspecialchars($store_info['address']) ?>" required>
-                    </div>
-                </div>
+            <form method="POST" action="update_store_info.php">
+                <label><strong>Tên quán:</strong></label><br>
+                <input type="text" name="name" value="<?= htmlspecialchars($store_info['name']) ?>"><br>
 
-                <div class="form-row">
-                    <div class="form-col">
-                        <label>Điện thoại</label>
-                        <input type="text" name="phone" value="<?= htmlspecialchars($store_info['phone']) ?>" required>
-                    </div>
-                    <div class="form-col">
-                        <label>Email</label>
-                        <input type="email" name="email" value="<?= htmlspecialchars($store_info['email']) ?>" required>
-                    </div>
-                </div>
+                <label><strong>Địa chỉ:</strong></label><br>
+                <input type="text" name="address" value="<?= htmlspecialchars($store_info['address']) ?>"><br>
 
-                <div class="form-row">
-                    <div class="form-col" style="flex-basis: 100%;">
-                        <label>Mô tả</label>
-                        <textarea name="description" rows="4" placeholder="Mô tả ngắn về quán"><?= htmlspecialchars($store_info['description']) ?></textarea>
-                    </div>
-                </div>
+                <label><strong>Điện thoại:</strong></label><br>
+                <input type="text" name="phone" value="<?= htmlspecialchars($store_info['phone']) ?>"><br>
 
-                <div class="form-row" style="align-items: center;">
-                    <div class="form-col">
-                        <label>Ảnh đại diện quán (Avatar)</label>
-                        <input type="file" name="avatar" accept="image/*">
-                    </div>
-                    <div class="form-col" style="text-align: center;">
-                        <label>Avatar hiện tại:</label><br>
-                        <?php if (!empty($store_info['avatar'])): ?>
-                            <img src="../../assets/images/store/<?= htmlspecialchars($store_info['avatar']) ?>" alt="Store Avatar" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 1px solid #ccc;">
-                        <?php else: ?>
-                            <p>Chưa có ảnh đại diện</p>
-                        <?php endif; ?>
-                    </div>
-                </div>
+                <label><strong>Email:</strong></label><br>
+                <input type="email" name="email" value="<?= htmlspecialchars($store_info['email']) ?>"><br>
 
-                <button type="submit" style="margin-top: 15px; padding: 8px 16px; cursor: pointer;">Cập nhật thông tin</button>
+                <label><strong>Mô tả:</strong></label><br>
+                <textarea name="description"><?= htmlspecialchars($store_info['description']) ?></textarea><br>
+
+                <button type="submit">Cập nhật thông tin</button>
             </form>
         <?php else: ?>
             <!-- Khách hàng chỉ được xem -->
@@ -191,18 +160,10 @@ try {
             <p><strong>Điện thoại:</strong> <?= htmlspecialchars($store_info['phone']) ?></p>
             <p><strong>Email:</strong> <?= htmlspecialchars($store_info['email']) ?></p>
             <p><strong>Mô tả:</strong> <?= htmlspecialchars($store_info['description']) ?></p>
-            <?php if (!empty($store_info['avatar'])): ?>
-                <p><strong>Avatar:</strong><br>
-                    <img src="../../assets/images/store/<?= htmlspecialchars($store_info['avatar']) ?>" alt="Store Avatar" style="max-width: 150px; max-height: 150px; border-radius: 8px; border: 1px solid #ccc;">
-                </p>
-            <?php else: ?>
-                <p><strong>Avatar:</strong> Chưa có ảnh đại diện</p>
-            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>
-
-
+    </section>
 </main>
 
 <script>

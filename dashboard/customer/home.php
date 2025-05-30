@@ -51,11 +51,10 @@
     <header>
         <div class="header-container">
             <div class="user-info">
-                <img src="/DataStore/assets/images/picture/<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="avatar">
+                <img src="../../assets/images/picture/<?= htmlspecialchars($avatar) ?>" alt="Avatar" class="avatar">
                 <p>Xin chào, <span class="username"><?= htmlspecialchars($username) ?></span>!</p>
             </div>
             <div class="header-actions">
-                <a href="profile.php" class="action-btn">Tài khoản</a>
                 <a href="logout.php" class="action-btn">Đăng xuất</a>
             </div>
         </div>
@@ -118,10 +117,46 @@
           <i class="fas fa-map-marker-alt"></i>
           <span>Theo dõi</span>
         </a>
-        <a href="minigame/mini_games.php" class="feature">
+        <a href="Game/mini_game.php" class="feature">
           <i class="fas fa-gamepad"></i>
           <span>Mini game</span>
         </a>
+            <a href="voucher.php" class="feature">
+      <i class="fas fa-ticket-alt"></i>
+      <span>Voucher</span>
+    </a>
+    <a href="lich_su_don_hang.php" class="feature">
+      <i class="fas fa-history"></i>
+      <span>Lịch sử</span>
+    </a>
+    <a href="yeu_thich.php" class="feature">
+      <i class="fas fa-heart"></i>
+      <span>Yêu thích</span>
+    </a>
+    <a href="danh_gia.php" class="feature">
+      <i class="fas fa-star"></i>
+      <span>Đánh giá</span>
+    </a>
+    <a href="support.php" class="feature">
+      <i class="fas fa-headset"></i>
+      <span>Hỗ trợ</span>
+    </a>
+    <a href="bao_cao_su_co.php" class="feature">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>Báo sự cố</span>
+    </a>
+    <a href="gop_y.php" class="feature">
+      <i class="fas fa-comment-dots"></i>
+      <span>Góp ý</span>
+    </a>
+    <a href="lien_he.php" class="feature">
+      <i class="fas fa-phone-alt"></i>
+      <span>Liên hệ</span>
+    </a>
+    <a href="ho_tro_truc_tuyen.php" class="feature">
+      <i class="fas fa-comments"></i>
+      <span>Chat hỗ trợ</span>
+    </a>
       </div>
     </div>
 

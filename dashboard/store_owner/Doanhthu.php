@@ -5,7 +5,7 @@ $owner_id = $_SESSION['owner_id'] ?? 1;  // ví dụ owner_id = 1
 
 // Kết nối CSDL
 $host = 'localhost';
-$dbname = 'your_database';
+$dbname = 'datastore_food';
 $user = 'root';
 $pass = '';
 try {

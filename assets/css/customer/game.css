@@ -1,0 +1,348 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #c2e5e2;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #1d5f58; /* Màu chữ đậm hơn từ tông chủ đạo */
+  text-shadow: 0 0 5px rgba(56, 142, 133, 0.5);
+}
+
+.game-menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.game-menu button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #57b1a8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.game-menu button:hover {
+  background-color: #3d9e94;
+}
+
+.game-wrapper {
+  max-width: 1500px;
+  margin: 0 auto 40px;
+  padding: 50px;
+  border: 2px solid #388e85;
+  border-radius: 15px;
+  background-color: #e0f7f5;
+  box-shadow: 0 0 15px rgba(56, 142, 133, 0.2);
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: repeat(5, 2fr);
+  gap: 20px;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.game-card {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.game-card h2 {
+  margin: 0 0 10px;
+  color: #2e6d65;
+}
+.game-card-image {
+  width: 100%;
+  height: 220px; /* hoặc cao bạn thích */
+  margin-bottom: 15px;
+  border: 2px solid #57b1a8;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(56, 142, 133, 0.3);
+  background-color: #e0f7f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.game-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ảnh sẽ cắt vừa khung, không méo */
+  display: block;
+}
+
+.game-card p {
+  margin: 10px 0;
+  color: #444;
+}
+
+.game-card button {
+  padding: 10px 20px;
+  background-color: #57b1a8;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.game-card button:hover {
+  background-color: #3d9e94;
+}
+
+.game-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.game-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.caro-board {
+  display: grid;
+  grid-template-columns: repeat(5, 60px);
+  gap: 2px;
+  margin: 20px auto;
+}
+
+.caro-cell {
+  width: 60px;
+  height: 60px;
+  background: #e0f2f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  cursor: pointer;
+  border: 1px solid #a7d8d3;
+}
+
+.quiz-option {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background: #e0f2f1;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.quiz-option:hover {
+  background: #b2ded9;
+}
+
+.race-game {
+  width: 400px;
+  height: 200px;
+  background: #a0dcd7;
+  position: relative;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+.car {
+  width: 40px;
+  height: 60px;
+  background: #388e85;
+  position: absolute;
+  bottom: 10px;
+  left: 180px;
+}
+
+.mario-game {
+  width: 400px;
+  height: 300px;
+  background: #b2e7e2;
+  position: relative;
+  margin: 20px auto;
+}
+
+.mario {
+  width: 40px;
+  height: 60px;
+  background: #388e85;
+  position: absolute;
+  bottom: 10px;
+  left: 180px;
+}
+
+.obstacle {
+  width: 20px;
+  height: 20px;
+  background: #444;
+  position: absolute;
+}
+
+
+/* ===== Responsive for Tablets and Mobiles ===== */
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .container, .wrapper, .main-content {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    header, footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, button, input[type="submit"] {
+        width: 100%;
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .container, .wrapper {
+        width: 100%;
+        padding: 0 5px;
+    }
+
+    .menu, .nav, .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.2em;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .grid, .row {
+        flex-direction: column;
+    }
+
+    .item, .card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Responsive nâng cao cho thiết bị di động đa dạng */
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container, .main-content, .content, .section {
+        width: 100%;
+        padding: 10px;
+        display: block;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, .form-input, input, select, textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .sidebar, .menu-left, .aside {
+        display: none;
+    }
+
+    .header, .footer {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .card, .box, .panel {
+        margin: 5px 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    html {
+        font-size: 13px;
+    }
+
+    .nav, .topbar, .menu-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.2em;
+    }
+}

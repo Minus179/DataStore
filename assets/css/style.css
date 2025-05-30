@@ -8,12 +8,24 @@
 /* Body với nền hình ảnh */
 body {
   font-family: "Poppins", sans-serif;
-  background: url("https://blogedenred.com.uy/wp-content/uploads/2019/07/que-son-los-productos-ultraprocesados.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main - nơi chứa nền ảnh */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+
+  background: url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1350&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Header */
@@ -126,4 +138,137 @@ footer {
   text-align: center;
   padding: 10px;
   font-size: 14px;
+}
+
+
+/* ===== Responsive for Tablets and Mobiles ===== */
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .container, .wrapper, .main-content {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    header, footer {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, button, input[type="submit"] {
+        width: 100%;
+        font-size: 1em;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .container, .wrapper {
+        width: 100%;
+        padding: 0 5px;
+    }
+
+    .menu, .nav, .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.2em;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .grid, .row {
+        flex-direction: column;
+    }
+
+    .item, .card {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* Responsive nâng cao cho thiết bị di động đa dạng */
+@media screen and (max-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container, .main-content, .content, .section {
+        width: 100%;
+        padding: 10px;
+        display: block;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .btn, .form-input, input, select, textarea {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .sidebar, .menu-left, .aside {
+        display: none;
+    }
+
+    .header, .footer {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .card, .box, .panel {
+        margin: 5px 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    html {
+        font-size: 13px;
+    }
+
+    .nav, .topbar, .menu-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    h1, h2, h3 {
+        font-size: 1.2em;
+    }
 }

@@ -71,5 +71,7 @@ if (!$user) {
     </section>
 </main>
 
+<?php include '../../includes/footer_3.php'; ?>
+
 </body>
 </html>

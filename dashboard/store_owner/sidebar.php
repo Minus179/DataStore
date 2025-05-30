@@ -5,6 +5,7 @@
         <li><a href="home.php">Trang Chủ</a></li>
         <li><a href="quan_ly_menu.php">Quản lý menu</a></li>
         <li><a href="don_hang.php">Đơn hàng</a></li>
+        
         <li><a href="Doanhthu.php">Doanh thu</a></li>
         <li><a href="voucher.php">Voucher</a></li>
         <li><a href="thong_ke.php">Thống kê</a></li>
