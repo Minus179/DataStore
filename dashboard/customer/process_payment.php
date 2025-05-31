@@ -72,6 +72,18 @@ try {
         $item_stmt->execute();
     }
 
+    // Nhận dữ liệu voucher
+$voucher_id = $_POST['voucher_id'] ?? null;
+$discount = $_POST['discount'] ?? 0;
+$final_price = $_POST['final_price'];
+
+// Sau khi tạo đơn hàng thành công:
+if ($voucher_id) {
+    $delete_voucher = $conn->prepare("DELETE FROM user_voucher WHERE user_id = ? AND voucher_id = ?");
+    $delete_voucher->bind_param("ii", $user_id, $voucher_id);
+    $delete_voucher->execute();
+}
+
     // 3. Xóa giỏ hàng hiện tại
     $delete_cart = "DELETE FROM cart WHERE user_id = ?";
     $del_stmt = $conn->prepare($delete_cart);

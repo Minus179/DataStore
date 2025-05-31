@@ -55,7 +55,7 @@
                 <p>Xin chào, <span class="username"><?= htmlspecialchars($username) ?></span>!</p>
             </div>
             <div class="header-actions">
-                <a href="logout.php" class="action-btn">Đăng xuất</a>
+                <a href="../../login/login.php" class="action-btn">Đăng xuất</a>
             </div>
         </div>
     </header>
@@ -87,11 +87,13 @@
       }
     </script>
 
+
+
     <!-- Banner khuyến mãi -->
     <div class="banner-container">
         <div class="banner">
             <?php
-            $banners = ['banner_1.jpg', 'banner_2.jpg', 'banner_3.jpg', 'banner_4.jpg', 'banner_5.jpg'];
+            $banners = ['banner_1.png', 'banner_2.jpg', 'banner_3.png', 'banner_4.jpg', 'banner_5.jpg'];
             foreach ($banners as $banner) {
                 echo '<img src="../../assets/images/banner/' . $banner . '" alt="Banner khuyến mãi">';
             }
@@ -113,10 +115,6 @@
           <i class="fas fa-shopping-cart"></i>
           <span>Giỏ hàng</span>
         </a>
-        <a href="theo_doi_vi_tri.php" class="feature">
-          <i class="fas fa-map-marker-alt"></i>
-          <span>Theo dõi</span>
-        </a>
         <a href="Game/mini_game.php" class="feature">
           <i class="fas fa-gamepad"></i>
           <span>Mini game</span>
@@ -125,13 +123,9 @@
       <i class="fas fa-ticket-alt"></i>
       <span>Voucher</span>
     </a>
-    <a href="lich_su_don_hang.php" class="feature">
+    <a href="order_history.php" class="feature">
       <i class="fas fa-history"></i>
       <span>Lịch sử</span>
-    </a>
-    <a href="yeu_thich.php" class="feature">
-      <i class="fas fa-heart"></i>
-      <span>Yêu thích</span>
     </a>
     <a href="danh_gia.php" class="feature">
       <i class="fas fa-star"></i>
@@ -149,7 +143,7 @@
       <i class="fas fa-comment-dots"></i>
       <span>Góp ý</span>
     </a>
-    <a href="lien_he.php" class="feature">
+    <a href="lienhe.php" class="feature">
       <i class="fas fa-phone-alt"></i>
       <span>Liên hệ</span>
     </a>
