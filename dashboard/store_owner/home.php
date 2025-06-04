@@ -67,6 +67,8 @@ $support_count = $support_new->fetch_assoc()['total'];
     <link rel="stylesheet" href="../../assets/css/store_owner/home_1.css?v=<?=time()?>" />
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 </head>
 <body>
 <?php include __DIR__ . '/sidebar.php'; ?>
@@ -74,13 +76,13 @@ $support_count = $support_new->fetch_assoc()['total'];
 <main class="main-content">
 
     <!-- Header ngang trên đầu -->
-    <header class="top-header">
-        <button class="tab-button active" data-target="all">Tất cả món</button>
-        <button class="tab-button" data-target="food">Món ăn</button>
-        <button class="tab-button" data-target="drink">Món nước</button>
-        <button class="tab-button" data-target="info">Thông tin quán</button>
-        <button class="tab-button" id="logout-button">Đăng xuất</button>
-    </header>
+        <header class="top-header">
+            <button class="tab-button active" data-target="all">Tất cả món</button>
+            <button class="tab-button" data-target="food">Món ăn</button>
+            <button class="tab-button" data-target="drink">Món nước</button>
+            <button class="tab-button" data-target="info">Thông tin quán</button>
+            <button class="tab-button" id="logout-button">Đăng xuất</button>
+        </header>
 
     <!-- Nội dung động -->
     <section id="content-area">

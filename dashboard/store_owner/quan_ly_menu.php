@@ -25,6 +25,7 @@ $store = $stmtStore->fetch(PDO::FETCH_ASSOC) ?: ['name'=>'', 'address'=>'', 'pho
     <link rel="stylesheet" href="../../assets/css/store_owner/home.css?v=<?=time()?>" />
     <link rel="stylesheet" href="../../assets/css/store_owner/home_1.css?v=<?=time()?>" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         .filter-tab {
             background-color: #e0f2f1;

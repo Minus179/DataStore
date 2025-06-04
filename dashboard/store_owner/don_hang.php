@@ -99,8 +99,8 @@ $orders = $conn->query($query);
 <head>
     <meta charset="UTF-8" />
     <title>Đơn hàng - Dashboard Chủ Quán</title>
-    <link rel="stylesheet" href="../../assets/css/store_owner/home.css?v=<?=time()?>" />
     <link rel="stylesheet" href="../../assets/css/store_owner/don_hang.css?v=<?=time()?>" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body>
 <?php include __DIR__ . '/sidebar.php'; ?>

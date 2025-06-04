@@ -39,10 +39,16 @@ if ($result->num_rows === 0) {
     exit();
 }
 
+// Tính tổng giá trị đơn hàng
 $total_price = 0;
 while ($row = $result->fetch_assoc()) {
     $total_price += $row['price'] * $row['quantity'];
 }
+
+// Giả lập khoảng cách giao hàng (có thể thay bằng tính thực tế)
+$distance_km = 1.5;
+$shipping_fee = 8000 * $distance_km;
+$final_total = $total_price + $shipping_fee;
 
 // Tạo mã đơn hàng duy nhất
 if (!isset($_SESSION['order_id'])) {
@@ -56,56 +62,48 @@ $date = date('d/m/Y');
 $bank_account = '7865237919';
 $bank_name = 'VCB';
 $account_name = 'Vo Ngoc Son';
-$amount = $total_price;
 $content = $order_id;
-$qr_data = "https://img.vietqr.io/image/VCB-{$bank_account}-compact2.png?amount={$amount}&addInfo={$content}&accountName=" . urlencode($account_name);
-
+$qr_data = "https://img.vietqr.io/image/VCB-{$bank_account}-compact2.png?amount={$final_total}&addInfo={$content}&accountName=" . urlencode($account_name);
 ?>
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Thanh Toán - IT Startup</title>
-
-<link rel="stylesheet" href="../../assets/css/customer/bill.css?v=<?=time()?>" />
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
-<script>
-  function togglePaymentInfo() {
-    const method = document.querySelector('input[name="payment_method"]:checked').value;
-    const qrSection = document.getElementById('qr-section');
-    if(method === 'bank_transfer') {
-      qrSection.style.display = 'flex';
-    } else {
-      qrSection.style.display = 'none';
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thanh Toán - IT Startup</title>
+  <link rel="stylesheet" href="../../assets/css/customer/bill.css?v=<?= time() ?>" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <script>
+    function togglePaymentInfo() {
+      const method = document.querySelector('input[name="payment_method"]:checked').value;
+      const qrSection = document.getElementById('qr-section');
+      if (method === 'bank_transfer') {
+        qrSection.style.display = 'flex';
+      } else {
+        qrSection.style.display = 'none';
+      }
     }
-  }
-
-  window.addEventListener('DOMContentLoaded', () => {
-    togglePaymentInfo();
-    document.querySelectorAll('input[name="payment_method"]').forEach(el => {
-      el.addEventListener('change', togglePaymentInfo);
+    window.addEventListener('DOMContentLoaded', () => {
+      togglePaymentInfo();
+      document.querySelectorAll('input[name="payment_method"]').forEach(el => {
+        el.addEventListener('change', togglePaymentInfo);
+      });
     });
-  });
-</script>
-
+  </script>
 </head>
 <body>
 
 <header>
   <div class="header-container">
-    
     <h2 class="cart-title">💳 Thanh Toán</h2>
     <div class="placeholder"></div>
   </div>
 </header>
 
- <div class="back-to-home">
-   <a href="home.php" class="back-btn"><i class="fas fa-arrow-left"></i></a>
- </div>
+<div class="back-to-home">
+  <a href="home.php" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+</div>
 
 <main class="container mx-auto py-8 px-4 max-w-4xl">
 
@@ -144,8 +142,12 @@ $qr_data = "https://img.vietqr.io/image/VCB-{$bank_account}-compact2.png?amount=
       </tbody>
     </table>
 
+    <div class="text-lg text-right mb-2">
+      Phí giao hàng (<?= $distance_km ?>km): <strong><?= number_format($shipping_fee, 0, ',', '.') ?>₫</strong>
+    </div>
+
     <div class="text-2xl font-bold text-red-700 text-right">
-      Tổng tiền: <?= number_format($total_price, 0, ',', '.') ?>₫
+      Tổng thanh toán: <?= number_format($final_total, 0, ',', '.') ?>₫
     </div>
   </section>
 
@@ -153,7 +155,7 @@ $qr_data = "https://img.vietqr.io/image/VCB-{$bank_account}-compact2.png?amount=
     <h3 class="text-xl font-semibold mb-2">Chọn phương thức thanh toán</h3>
     <form action="process_payment.php" method="post">
       <input type="hidden" name="order_code" value="<?= $order_id ?>">
-      <input type="hidden" name="total_price" value="<?= $total_price ?>">
+      <input type="hidden" name="total_price" value="<?= $final_total ?>">
 
       <label class="mr-6">
         <input type="radio" name="payment_method" value="cash" checked /> Tiền mặt
