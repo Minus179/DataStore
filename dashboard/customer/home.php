@@ -86,23 +86,25 @@
         document.getElementById("searchForm").submit();  // Gửi form
       }
     </script>
-
-
-
-    <!-- Banner khuyến mãi -->
-    <div class="banner-container">
-        <div class="banner">
-            <?php
-            $banners = ['banner_1.png', 'banner_2.jpg', 'banner_3.png', 'banner_4.jpg', 'banner_5.jpg'];
-            foreach ($banners as $banner) {
-                echo '<img src="../../assets/images/banner/' . $banner . '" alt="Banner khuyến mãi">';
-            }
-            ?>
-        </div>
-        <div class="marquee-container">
-            <marquee behavior="scroll" direction="left">🔊 Khuyến mãi sập sàn, cơ hội không thể bỏ lỡ! Hãy nhanh tay đặt đơn ngay hôm nay để nhận vô vàn ưu đãi hấp dẫn, quà tặng bất ngờ và những phần quà siêu hot chỉ có trong thời gian có hạn!</marquee>
-        </div>
+  
+  <!-- Banner -->
+  <div class="banner-container">
+    <div class="banner">
+      <?php
+      $banners = ['banner_1.png', 'banner_2.jpg', 'banner_3.png', 'banner_4.jpg', 'banner_5.jpg'];
+      // Nhân đôi mảng banner để tạo hiệu ứng lặp mượt
+      $banners = array_merge($banners, $banners);
+      foreach ($banners as $banner) {
+          echo '<img src="../../assets/images/banner/' . $banner . '" alt="Banner khuyến mãi">';
+      }
+      ?>
     </div>
+    <div class="marquee-container">
+      <div class="marquee-text">
+        <b>🔊 Khuyến mãi sập sàn, cơ hội không thể bỏ lỡ! Hãy nhanh tay đặt đơn ngay hôm nay để nhận vô vàn ưu đãi hấp dẫn, quà tặng bất ngờ và những phần quà siêu hot chỉ có trong thời gian có hạn!</b>
+      </div>
+    </div>
+  </div>
 
     <!-- Tính năng -->
     <div class="features-scroll">
@@ -123,9 +125,9 @@
       <i class="fas fa-ticket-alt"></i>
       <span>Voucher</span>
     </a>
-    <a href="order_history.php" class="feature">
+    <a href="don_hang.php" class="feature">
       <i class="fas fa-history"></i>
-      <span>Lịch sử</span>
+      <span>Lịch sử đơn hàng</span>
     </a>
     <a href="danh_gia.php" class="feature">
       <i class="fas fa-star"></i>
@@ -147,7 +149,7 @@
       <i class="fas fa-phone-alt"></i>
       <span>Liên hệ</span>
     </a>
-    <a href="ho_tro_truc_tuyen.php" class="feature">
+    <a href="support_chat.php" class="feature">
       <i class="fas fa-comments"></i>
       <span>Chat hỗ trợ</span>
     </a>

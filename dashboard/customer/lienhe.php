@@ -50,13 +50,13 @@
         }
 
         h1, h2 {
-            color: #ff5722;
+            color: #388e85;
             margin-bottom: 12px;
             user-select: none;
         }
 
         h1 {
-            border-bottom: 3px solid #ff5722;
+            border-bottom: 3px solid #388e85;
             padding-bottom: 6px;
             font-weight: 700;
             font-size: 28px;
@@ -85,17 +85,17 @@
         }
 
         .note {
-            background: #fff4e5;
-            border-left: 5px solid #ff5722;
+            background: #e6f2f0;
+            border-left: 5px solid #388e85;
             padding: 12px 16px;
             margin: 20px 0;
             border-radius: 8px;
             font-style: italic;
-            color: #bf360c;
+            color: #205c56;
         }
 
         a.email-link {
-            color: #ff5722;
+            color: #388e85;
             font-weight: 700;
             text-decoration: none;
         }
@@ -104,11 +104,11 @@
         }
 
         .office {
-            background: #f9f9f9;
+            background: #f0f7f6;
             padding: 12px 15px;
             border-radius: 8px;
             margin-top: 10px;
-            box-shadow: 0 1px 6px rgba(255,87,34,0.15);
+            box-shadow: 0 1px 6px rgba(56,142,133,0.15);
         }
 
         /* Responsive */
@@ -144,7 +144,7 @@
     </a>
 
     <h1>📞 Tổng đài hỗ trợ ShopeeFood</h1>
-    <p><strong>Số điện thoại:</strong> <span style="color:#ff5722; font-weight: 700;">085 755 1919</span></p>
+    <p><strong>Số điện thoại:</strong> <span style="color:#388e85; font-weight: 700;">085 755 1919</span></p>
     <p><strong>Thời gian hoạt động:</strong> 24/7</p>
     <p><strong>Cước phí:</strong> 1.000 VNĐ/phút</p>
 
@@ -164,8 +164,8 @@
     <p>Phương thức này phù hợp để giải quyết các vấn đề không quá gấp hoặc cần thời gian xử lý lâu hơn.</p>
 
     <h2>🧑‍💻 Trung tâm trợ giúp trực tuyến</h2>
-    <p>Website: <a href="https://help.cs.shopeefood.vn" target="_blank" class="email-link">help.cs.shopeefood.vn</a></p>
-    <p>Tại đây, bạn có thể gửi báo cáo hoặc yêu cầu hỗ trợ liên quan đến đơn hàng. Để sử dụng, hãy đăng nhập vào ứng dụng Shopee, chọn mục ShopeeFood, sau đó vào "Đơn hàng" và chọn đơn hàng cần hỗ trợ. Tiếp theo, chọn "Trung tâm trợ giúp" để gửi yêu cầu.</p>
+    <p>Website: <a href="http:/DataStore/dashboard/customer/support_chat.php" target="_blank" class="email-link">http:/localhost/DataStore/dashboard/customer/support_chat.php</a></p>
+    <p>Tại đây, bạn có thể gửi báo cáo hoặc yêu cầu hỗ trợ liên quan đến đơn hàng. Để sử dụng, hãy đăng nhập vào wedsite, sau đó vào "Đơn hàng" và chọn đơn hàng cần hỗ trợ. Tiếp theo, chọn "Trung tâm trợ giúp" để gửi yêu cầu.</p>
 
     <h2>🏢 Văn phòng DataStore Food</h2>
     <div class="office">

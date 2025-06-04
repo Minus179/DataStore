@@ -69,8 +69,8 @@ $total_price = 0;
 <main class="container mx-auto py-8 px-4 max-w-5xl">
   <?php if ($result->num_rows === 0): ?>
     <p class="text-center text-xl text-gray-600 mb-6">Giỏ hàng của bạn đang trống.</p>
-    <div class="text-center">
-      <a href="menu.php" class="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold">
+    <div class="text-right">
+      <a href="home.php" class="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-full font-semibold">
         Tiếp tục mua hàng
       </a>
     </div>

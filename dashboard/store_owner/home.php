@@ -12,6 +12,21 @@ try {
 
     // Lấy owner_id từ session
     $owner_id = $_SESSION['user_id'];
+    
+    // Kiểm tra có đơn hàng mới
+$order_new = $conn->query("SELECT COUNT(*) AS total FROM orders WHERE status = 'new'");
+$order_count = $order_new->fetch_assoc()['total'];
+
+// Kiểm tra có tin nhắn khách chưa phản hồi
+$support_new = $conn->query("
+    SELECT COUNT(*) AS total FROM (
+        SELECT user_id, MAX(sender) AS last_sender
+        FROM support_chat
+        GROUP BY user_id
+        HAVING last_sender = 'customer'
+    ) AS subquery
+");
+$support_count = $support_new->fetch_assoc()['total'];
 
     // Lấy danh sách món hàng (đã chuẩn bị câu lệnh)
     $stmt = $pdo->prepare('SELECT * FROM menu_items ORDER BY created_at DESC');
