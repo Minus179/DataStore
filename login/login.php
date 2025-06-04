@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="register-link">
-                Chưa có tài khoản? <a href="register/register_choice.php">Đăng ký ngay</a>
+                Chưa có tài khoản? <a href="../register/register_choice.php">Đăng ký ngay</a>
             </div>
         </section>
     </main>

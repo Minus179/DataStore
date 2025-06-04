@@ -95,41 +95,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <i class="fas fa-arrow-left"></i>
     </a>
 
-    <section class="container">
-        <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="name">Họ tên:</label>
-                <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+<section class="container">
+    <form action="edit_profile.php" method="POST" enctype="multipart/form-data">
+
+        <!-- Các thông tin chia 2 cột -->
+        <div class="form-flex">
+            <div class="form-left">
+                <div class="form-group">
+                    <label for="name">Họ tên:</label>
+                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="phone">Số điện thoại:</label>
-                <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
+
+            <div class="form-right">
+                <div class="form-group">
+                    <label for="phone">Số điện thoại:</label>
+                    <input type="text" id="phone" name="phone" value="<?php echo htmlspecialchars($user['phone']); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ:</label>
+                    <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($user['address']); ?>" required>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="address">Địa chỉ:</label>
-                <input type="text" id="address" name="address" value="<?php echo htmlspecialchars($user['address']); ?>" required>
-            </div>
-            <div class="form-group">
-                <label for="avatar">Chọn ảnh đại diện mới:</label>
-                <input type="file" id="avatar" name="avatar" accept="image/*">
-                <?php if (!empty($user['avatar'])): ?>
-                    <img src="../../assets/images/picture/<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar hiện tại" style="max-width: 100px; margin-top: 10px;">
-                <?php endif; ?>
-            </div>
-            <div class="form-group">
-                <label for="password">Xác nhận mật khẩu:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="update-btn">Cập nhật</button>
-            </div>
-        </form>
-    </section>
+        </div>
+
+        <!-- Ảnh đại diện -->
+        <div class="form-group">
+            <label for="avatar">Chọn ảnh đại diện mới:</label>
+            <input type="file" id="avatar" name="avatar" accept="image/*">
+            <?php if (!empty($user['avatar'])): ?>
+            <img class="preview-avatar" src="../../assets/images/picture/<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar hiện tại">
+            <?php endif; ?>
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="form-group">
+            <label for="password">Xác nhận mật khẩu:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <!-- Nút cập nhật -->
+        <div class="form-buttons">
+            <button type="submit" class="update-btn">Cập nhật</button>
+        </div>
+
+    </form>
+</section>
 </main>
+
+<?php include '../../includes/footer_3.php'; ?>
 
 </body>
 </html>

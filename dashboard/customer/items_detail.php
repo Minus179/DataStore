@@ -102,9 +102,7 @@ while ($row = $image_results->fetch_assoc()) {
                 </form>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; DATASTORE_FOOD - Hệ thống đặt đồ ăn và nước uống tiện lợi</p>
-        </div>
     </footer>
 </body>
+
 </html>

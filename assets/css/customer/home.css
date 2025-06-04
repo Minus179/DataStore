@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #e0f2f1;
+  background-color: #9de2cd;
   color: #37474f;
   line-height: 1.6;
 }
@@ -21,7 +21,7 @@ header {
   background-color: #388e85;
   color: white;
   padding: 15px 30px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Phần header */
@@ -29,7 +29,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 15px 25px;
   background-color: #388e85; /* Hoặc màu nền phù hợp */
 }
 
@@ -39,15 +39,15 @@ header {
 }
 
 .user-info img.avatar {
-  width: 60px; /* Kích thước nhỏ cho avatar */
-  height: 60px; /* Đảm bảo chiều cao bằng chiều rộng để tạo hình tròn */
-  border-radius: 100%; /* Làm cho avatar thành hình tròn */
-  object-fit: cover; /* Đảm bảo ảnh không bị méo */
-  margin-right: 10px; /* Khoảng cách giữa ảnh và tên */
+  width: 70px;
+  height: 70px;
+  border-radius: 100%;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
 .username {
-  font-size: 20px; /* Kích thước chữ cho tên người dùng */
+  font-size: 20px;
   font-weight: bold;
 }
 
@@ -63,7 +63,7 @@ header {
   text-decoration: none;
   color: #fff;
   margin-left: 10px;
-  font-size: 14px;
+  font-size: 20px;
   transition: background-color 0.3s;
 }
 
@@ -78,7 +78,8 @@ header {
   width: 100%;
   background-color: #66b7a6;
   position: relative;
-  padding-top: 30px; /* tăng tí cho marquee khỏi dính ảnh */
+  padding-top: 30px;
+  overflow: hidden;
 }
 
 .marquee-container {
@@ -93,18 +94,26 @@ header {
   z-index: 2;
 }
 
+/* Banner animation */
 .banner {
+  width: max-content;
   display: flex;
   gap: 14px;
-  overflow-x: auto;
-  padding: 15px 25px 25px; /* tăng padding để không gian rộng hơn */
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+  animation: scrollBanner 30s linear infinite;
+}
+
+@keyframes scrollBanner {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .banner img {
-  width: 400px; /* tăng chiều rộng */
-  height: 250px; /* tăng chiều cao */
+  width: 450px;
+  height: 300px;
   object-fit: cover;
   border-radius: 10px;
   transition: transform 0.3s ease;
@@ -182,35 +191,39 @@ header {
   background-color: #ffffff;
   padding: 15px 10px;
   overflow-x: auto;
-  white-space: nowrap;
   margin: 10px 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .features-list {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  width: max-content;
+  max-height: 270px; /* tăng chút cho 2 dòng */
 }
 
 .feature {
   background-color: #b2d8d1;
   color: #388e85;
-  padding: 12px 18px;
+  padding: 15px 22px;
   border-radius: 15px;
   text-decoration: none;
   font-weight: 600;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80px;
+  width: 160px;
+  min-height: 120px; /* tăng chiều cao cho cân đối */
   transition: 0.3s;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
 }
 
 .feature i {
-  font-size: 30px;
-  margin-bottom: 10px; /* Tăng chút khoảng cách */
+  font-size: 36px; /* tăng icon lên cho hoành tráng */
+  margin-bottom: 14px;
 }
 
 .feature:hover {
@@ -395,24 +408,25 @@ header {
 .bottom-nav a {
   text-decoration: none;
   color: #333;
-  font-size: 14px;
+  font-size: 20px;
+  font-weight: 600;
   text-align: center;
   position: relative;
 }
 
 .bottom-nav a i {
   display: block;
-  font-size: 18px;
+  font-size: 22px;
 }
 
 .cart-count {
   background-color: red;
   color: white;
-  padding: 2px 6px;
+  padding: 4px 8px;
   font-size: 10px;
   border-radius: 50%;
   position: absolute;
-  top: -2px;
+  top: -8px;
   right: 10px;
 }
 

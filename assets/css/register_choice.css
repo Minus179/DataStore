@@ -6,14 +6,27 @@
 }
 
 /* Body - nền ảnh cover fixed, font chuẩn */
+/* Body - chỉ định font, layout tổng thể, KHÔNG chứa ảnh nền */
 body {
   font-family: "Poppins", sans-serif;
-  background: url("https://i.pinimg.com/originals/fd/ce/2f/fdce2f36a205ec1ffcb34d1cd654eb4f.jpg")
-    no-repeat center center fixed;
-  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main - nơi chứa nền ảnh */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+
+  background: url("https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1350&q=80")
+    no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Header: nền màu chính xanh ngọc, chữ trắng, căn giữa */

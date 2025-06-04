@@ -55,9 +55,9 @@
 /* Card món: fix width và height để đều nhau */
 .menu-card {
   background: #fff;
-  border: 1px solid #ccc;
+  border: 5px solid #ccc;
   border-radius: 8px;
-  width: 220px; /* rộng hơn chút */
+  width: 250px; /* rộng hơn chút */
   height: 320px; /* chiều cao cố định để card đều nhau */
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -66,7 +66,6 @@
   align-items: center;
   padding: 15px;
   cursor: pointer;
-  box-sizing: border-box;
 }
 
 /* Hover hiệu ứng */
@@ -126,20 +125,6 @@
 .menu-card .delete-btn:hover,
 .menu-card .detail-btn:hover {
   background-color: #004494;
-}
-
-/* Reset style nút button xóa nếu dùng button */
-button.delete-btn {
-  border: none;
-  outline: none;
-}
-
-/* Style riêng cho tab sửa và xóa (bọc trong container #sua, #xoa) */
-#sua,
-#xoa {
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
 }
 
 /* Responsive cho màn nhỏ */
@@ -333,4 +318,41 @@ button.delete-btn {
     transform: none !important;
     margin-bottom: 15px;
   }
+}
+/* Nhóm nút nhỏ gọn: đặt dưới tên và giá */
+.menu-card .menu-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Nút nhỏ: sửa và xóa */
+.menu-card .mini-btn {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.2s ease;
+  min-width: 70px;
+  box-shadow: none;
+  margin: 0; /* Xoá margin thừa */
+  background-color: inherit; /* màu đặt ở lớp cụ thể */
+}
+
+.menu-card .btn-edit {
+  background-color: #007bff;
+}
+.menu-card .btn-edit:hover {
+  background-color: #0056b3;
+}
+.menu-card .btn-delete {
+  background-color: #dc3545;
+}
+.menu-card .btn-delete:hover {
+  background-color: #b02a37;
 }

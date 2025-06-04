@@ -1,166 +1,51 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 'customer') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'customer') {
     header("Location: ../../login/login.php");
     exit();
 }
 
-if (empty($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
-
-$conn = new mysqli("localhost", "root", "", "datastore_food");
-if ($conn->connect_error) {
-    die("Kết nối thất bại: " . $conn->connect_error);
-}
-
-// Xử lý POST thêm món (add to cart)
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['item_id'], $_POST['csrf_token'])) {
-    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-        die("Token không hợp lệ. Vui lòng tải lại trang.");
-    }
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['item_id'])) {
+    $user_id = $_SESSION['user_id'];
     $item_id = intval($_POST['item_id']);
-    $quantity = 1;
 
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
+    $conn = new mysqli("localhost", "root", "", "datastore_food");
+    if ($conn->connect_error) {
+        die("Kết nối thất bại: " . $conn->connect_error);
     }
 
-    if (isset($_SESSION['cart'][$item_id])) {
-        $_SESSION['cart'][$item_id]['quantity'] += $quantity;
+    // Kiểm tra món này đã có trong giỏ chưa?
+    $checkQuery = "SELECT quantity FROM cart WHERE user_id = ? AND item_id = ?";
+    $stmtCheck = $conn->prepare($checkQuery);
+    $stmtCheck->bind_param("ii", $user_id, $item_id);
+    $stmtCheck->execute();
+    $resultCheck = $stmtCheck->get_result();
+
+    if ($resultCheck->num_rows > 0) {
+        // Món đã có, tăng số lượng lên 1
+        $row = $resultCheck->fetch_assoc();
+        $new_quantity = $row['quantity'] + 1;
+
+        $updateQuery = "UPDATE cart SET quantity = ? WHERE user_id = ? AND item_id = ?";
+        $stmtUpdate = $conn->prepare($updateQuery);
+        $stmtUpdate->bind_param("iii", $new_quantity, $user_id, $item_id);
+        $stmtUpdate->execute();
     } else {
-        $query = "SELECT * FROM menu_items WHERE id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $item_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $item = $result->fetch_assoc();
-            $_SESSION['cart'][$item_id] = [
-                'id' => $item['id'],
-                'name' => $item['name'],
-                'price' => $item['price'],
-                'image' => $item['image_path'], // Chỉnh tên đúng trường image_path trong DB
-                'quantity' => $quantity
-            ];
-        }
-        $stmt->close();
+        // Món chưa có, thêm mới quantity = 1
+        $insertQuery = "INSERT INTO cart (user_id, item_id, quantity) VALUES (?, ?, 1)";
+        $stmtInsert = $conn->prepare($insertQuery);
+        $stmtInsert->bind_param("ii", $user_id, $item_id);
+        $stmtInsert->execute();
     }
 
-    header("Location: cart.php");
+    $conn->close();
+
+    // Quay lại trang trước đó (home hoặc menu)
+    header("Location: " . $_SERVER['HTTP_REFERER']);
+    exit();
+} else {
+    header("Location: home.php");
     exit();
 }
-
-// Lấy danh sách món hiển thị demo (thay bằng query thực tế nếu muốn)
-$items = [
-    ['id' => 1, 'name' => 'Món ăn 1', 'price' => 50000, 'image' => '../../assets/images/food/sample-item.jpg', 'description' => 'Mô tả món ăn 1'],
-    ['id' => 2, 'name' => 'Món ăn 2', 'price' => 60000, 'image' => '../../assets/images/food/sample-item2.jpg', 'description' => 'Mô tả món ăn 2'],
-];
 ?>
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Thêm món vào giỏ hàng</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0; padding: 0;
-    }
-    header {
-        background-color: #e67e22;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-    }
-    h1 { margin: 0; }
-    a {
-        color: #fff;
-        text-decoration: none;
-        padding: 10px 20px;
-        background-color: #d35400;
-        border-radius: 5px;
-        display: inline-block;
-        margin-top: 20px;
-    }
-    .container {
-        width: 80%;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .product {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 10px;
-        background-color: #fafafa;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .product img {
-        width: 100px; height: 100px; object-fit: cover; border-radius: 5px;
-    }
-    .product-info {
-        margin-left: 20px;
-    }
-    .product-info h2 {
-        margin: 0; font-size: 18px; color: #333;
-    }
-    .product-info p {
-        margin: 5px 0; color: #777;
-    }
-    .product-info .price {
-        font-size: 20px; font-weight: bold; color: #e74c3c;
-    }
-    .button {
-        padding: 10px 15px;
-        background-color: #e67e22;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .button:hover {
-        background-color: #d35400;
-    }
-</style>
-</head>
-<body>
-
-<header>
-    <h1>Thêm món vào giỏ hàng</h1>
-</header>
-
-<div class="container">
-    <?php foreach($items as $item): ?>
-        <div class="product">
-            <img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['name']) ?>" />
-            <div class="product-info">
-                <h2><?= htmlspecialchars($item['name']) ?></h2>
-                <p><?= htmlspecialchars($item['description']) ?></p>
-                <p class="price"><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
-                <form method="POST" action="">
-                    <input type="hidden" name="item_id" value="<?= $item['id'] ?>" />
-                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
-                    <button class="button" type="submit">Thêm vào giỏ hàng</button>
-                </form>
-            </div>
-        </div>
-    <?php endforeach; ?>
-    <a href="cart.php">Xem giỏ hàng</a>
-</div>
-
-<?php include 'footer.php'; ?>
-
-</body>
-</html>

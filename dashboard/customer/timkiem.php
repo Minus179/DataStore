@@ -51,21 +51,39 @@ $categories = [
     'Phở' => '🍲',
     'Bún' => '🍜',
     'Bánh Canh' => '🍲',
-    'Cơm' => '🍚',
-    'Món chính' => '🍛',
-    'Cà phê' => '☕'
+    'Cơm' => '🍚',  
+    'Cà phê' => '☕',
+    'Hủ Tiếu' => '🥣',
+    'Bánh Mì' => '🥖',
+    'Cháo' => '🍲',
+    'Gỏi Cuốn' => '🥟',
+    'Nem' => '🍤',
+    'Lẩu' => '🍲',
+    'Trà sữa' => '🧋',
+    'Sinh Tố' => '🍹',
+    'Nước ép' => '🧃',
+    'Trà' => '🍵',
+    'Kem' => '🍦',
+    'Sushi' => '🍣',
 ];
 
 // Hàm lấy danh sách món theo loại và giới hạn
 function getMenuItemsByType($conn, $type, $limit = 10) {
-    $stmt = $conn->prepare("SELECT * FROM menu_items WHERE type = ? LIMIT ?");
-    $stmt->bind_param('si', $type, $limit);
+    // Kiểm tra $limit là số nguyên và an toàn trước khi đưa vào SQL
+    $limit = (int)$limit;
+
+    // Câu truy vấn với LIMIT được nối trực tiếp (đảm bảo $limit là số an toàn)
+    $sql = "SELECT * FROM menu_items WHERE type = ? LIMIT $limit";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $type);  // Chỉ bind param type, limit nối trực tiếp
     $stmt->execute();
     $result = $stmt->get_result();
     $items = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
     return $items;
 }
+
 
 $foodItems = getMenuItemsByType($conn, 'food');
 $drinkItems = getMenuItemsByType($conn, 'drink');
@@ -77,7 +95,7 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
     <meta charset="UTF-8" />
     <title>Tìm kiếm món ăn - DATASTORE FOOD</title>
     <link rel="stylesheet" href="../../assets/css/customer/timkiem.css?v=<?= time() ?>" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         // Fallback khi ảnh bị lỗi, đổi sang ảnh mặc định
         function handleImageError(img) {
@@ -117,10 +135,12 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
         </form>
     </section>
 
-    <!-- Gợi ý danh mục -->
-    <section class="categories">
-        <form class="category-form" action="timkiem.php" method="GET">
-            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+
+<!-- Gợi ý danh mục -->
+<section class="categories">
+    <form class="category-form" action="timkiem.php" method="GET">
+        <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>" />
+        <div class="category-container">
             <?php foreach ($categories as $category => $icon): ?>
                 <button
                     type="submit"
@@ -131,8 +151,10 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
                     <?= $icon ?> <?= $category ?>
                 </button>
             <?php endforeach; ?>
-        </form>
-    </section>
+        </div>
+    </form>
+</section>
+
 
     <!-- Kết quả tìm kiếm -->
  <div class="scroll-container">
@@ -256,8 +278,7 @@ $drinkItems = getMenuItemsByType($conn, 'drink');
 </div>
 </main>
 
-<footer>
-    <p>🚀 IT_STARTUP TEAM - Khởi nghiệp cùng bạn!</p>
-</footer>
+<?php include '../../includes/footer_1.php'; ?>
+
 </body>
 </html>
