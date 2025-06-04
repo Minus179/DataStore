@@ -53,7 +53,7 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p><?= number_format($item['price'], 0, ',', '.') ?>₫</p>
                     <div class="menu-card-actions">
                         <div class="action-wrapper">
-                            <button class="mini-btn btn-edit">Sửa</button>
+                            <button class="mini-btn btn-edit" onclick="location.href='sua.php?id=<?= $item['id'] ?>'">Sửa</button>
                         </div>
                          <div class="action-wrapper">
                         <button class="mini-btn btn-delete" data-id="<?= $item['id'] ?>">Xóa</button>
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.addEventListener('click', function () {
             const id = this.dataset.id;
             if (confirm('Bạn có chắc muốn xoá món này không?')) {
-                window.location.href = '../edit_mon.php?delete=' + id;
+                window.location.href = 'edit_mon.php?delete=' + id;
             }
         });
     });
